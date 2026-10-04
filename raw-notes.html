@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raw Notes · The Physics of Ski Carving</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F9FBFE; --surface:#FFFFFF; --ink:#0B1F3A; --ink-2:#3B4E6C; --muted:#6B7E9C; --line:#D6E1EE; --accent:#1D5BD0; --accent-soft:#DCE7FA;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#07122A; --surface:#0C1B36; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6; --line:#22395C; --accent:#6EA4FF; --accent-soft:#17315C; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --bg:#07122A; --surface:#0C1B36; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6; --line:#22395C; --accent:#6EA4FF; --accent-soft:#17315C; color-scheme:dark; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.6;padding-inline:clamp(16px,4vw,44px);padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}
+.bar{max-width:1180px;margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)}
+.bar a{font-family:var(--f-display);font-weight:650;font-size:.9rem;color:var(--accent);text-decoration:none}
+.bar .name{font-family:var(--f-display);font-weight:700;font-stretch:110%;font-size:.95rem;color:var(--ink)}
+main{max-width:1180px;margin:0 auto;padding-block:64px}
+h1{margin:0 0 8px;font-family:var(--f-display);font-weight:800;font-stretch:115%;font-size:clamp(2rem,5vw,3.4rem);line-height:1;letter-spacing:-.02em}
+p{margin:0;color:var(--muted);max-width:34rem}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="name">The Physics of Ski Carving</span>
+  <a href="index.html" onclick="if(history.length>1){history.back();return false;}">← Back to the site</a>
+</div>
+<main>
+  <h1>Raw Notes</h1>
+  <p>Coming soon: the measurement tables, photos and lab notebook from the experiment.</p>
+</main>
+</body>
+</html>
