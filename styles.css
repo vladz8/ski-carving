@@ -17,6 +17,10 @@
   --gs:#eb6834;
   --warn:#d03b3b;
   --track:#A7C2E8;
+  /* "where" list tags */
+  --tag-meas:#16663A; --tag-meas-bg:#DFF3E7;
+  --tag-fit:#5A3AA6; --tag-fit-bg:#ECE5FB;
+  --tag-calc:#1A4FB5; --tag-calc-bg:#DCE7FA;
   --shadow:0 1px 2px rgba(11,31,58,.05),0 10px 30px rgba(11,31,58,.07);
   --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-body:"Source Sans 3","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -28,23 +32,29 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#07122A; --surface:#0C1B36; --snow:#0F2241; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6;
-    --line:#22395C; --accent:#6EA4FF; --accent-ink:#06122A; --accent-soft:#17315C; --ski:#3A66B8;
+    --bg:#0B1832; --surface:#10213F; --snow:#14294B; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6;
+    --line:#284062; --accent:#6EA4FF; --accent-ink:#06122A; --accent-soft:#1A3663; --ski:#3A66B8;
     --sl:#3987e5; --gs:#d95926; --warn:#e66767; --track:#2C568F;
+    --tag-meas:#8BDDAD; --tag-meas-bg:#15392B;
+    --tag-fit:#C7B6FF; --tag-fit-bg:#2C2553;
+    --tag-calc:#A3C5FF; --tag-calc-bg:#1A3663;
     --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.28);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#07122A; --surface:#0C1B36; --snow:#0F2241; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6;
-  --line:#22395C; --accent:#6EA4FF; --accent-ink:#06122A; --accent-soft:#17315C; --ski:#3A66B8;
+  --bg:#0B1832; --surface:#10213F; --snow:#14294B; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6;
+  --line:#284062; --accent:#6EA4FF; --accent-ink:#06122A; --accent-soft:#1A3663; --ski:#3A66B8;
   --sl:#3987e5; --gs:#d95926; --warn:#e66767; --track:#2C568F;
+  --tag-meas:#8BDDAD; --tag-meas-bg:#15392B;
+  --tag-fit:#C7B6FF; --tag-fit-bg:#2C2553;
+  --tag-calc:#A3C5FF; --tag-calc-bg:#1A3663;
   --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.28);
   color-scheme:dark;
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-snap-type:y proximity;scroll-padding-top:var(--nav-h)}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:var(--accent)}
@@ -61,22 +71,44 @@ sub,sup{line-height:0}
 .nav-in{height:var(--nav-h);max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-weight:700;font-stretch:110%;font-size:.95rem;letter-spacing:.005em}
 .brand .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chip{flex:none;font:700 .66rem/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:5px 7px;border-radius:6px}
+.brand .pre{font-weight:450;font-stretch:100%;color:var(--ink-2)}
+.brand .main{font-weight:800;font-stretch:118%;letter-spacing:-.01em}
+/* the mark: two carved tracks; on hover they tip over like a ski going onto its edge and redraw */
+.mark{flex:none;display:block;width:30px;height:30px;overflow:visible}
+.mark-bg{fill:var(--accent);transition:fill .3s}
+.mark-ski{transform-box:view-box;transform-origin:16px 16px;transition:transform .55s cubic-bezier(.34,1.56,.64,1)}
+.mark-trk{fill:none;stroke:var(--accent-ink);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:30;stroke-dashoffset:0}
+.brand:hover .mark-ski,.brand:focus-visible .mark-ski{transform:rotate(-16deg) scale(1.04)}
+.mark-trk{animation:trk 1.1s .3s var(--ease) backwards}
+.mark-trk+.mark-trk{animation-delay:.42s}
+.brand:hover .mark-trk,.brand:focus-visible .mark-trk{animation:trk-again .8s var(--ease) backwards}
+.brand:hover .mark-trk+.mark-trk,.brand:focus-visible .mark-trk+.mark-trk{animation-delay:.08s}
+@keyframes trk{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+@keyframes trk-again{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+@media (max-width:400px){.brand .pre{display:none}}
+@media (prefers-reduced-motion: reduce){.mark-trk,.brand:hover .mark-trk{animation:none}.mark-ski{transition:none}}
 .rawlink{flex:none;font-family:var(--f-display);font-weight:650;font-size:.9rem;color:var(--accent);text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);transition:border-color .2s}
 .rawlink:hover{border-color:var(--accent)}
 .progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
 
 /* ---------- Side rail ---------- */
-.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:12px}
-.rail a{display:block;width:9px;height:9px;border-radius:50%;background:var(--line);position:relative;transition:transform .25s,background .25s}
-.rail a.on{background:var(--accent);transform:scale(1.4)}
-.rail a span{position:absolute;right:18px;top:50%;transform:translateY(-50%);white-space:nowrap;font:600 .74rem/1 var(--f-display);color:var(--ink-2);background:var(--surface);border:1px solid var(--line);padding:6px 8px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
-.rail a:hover span,.rail a:focus-visible span{opacity:1}
+/* Each link is a 21px hit area with the dot drawn by ::before, so the dot can pop out
+   (with a little overshoot) without scaling its label; its neighbours swell slightly too. */
+.rail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column}
+.rail a{display:grid;place-items:center;width:21px;height:21px;position:relative;text-decoration:none}
+.rail a::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--line);transition:transform .45s cubic-bezier(.34,1.56,.64,1),background-color .25s,box-shadow .35s var(--ease)}
+.rail a.on::before{background:var(--accent);transform:scale(1.4)}
+.rail a:not(.on):has(+ a:hover)::before,.rail a:hover + a:not(.on)::before{transform:scale(1.3);background:var(--muted)}
+.rail a:hover::before,.rail a:focus-visible::before{background:var(--accent);transform:scale(1.9);box-shadow:0 0 0 3px var(--accent-soft)}
+.rail a:focus-visible{outline:none}
+.rail a span{position:absolute;right:28px;top:50%;transform:translate(8px,-50%) scale(.96);transform-origin:right center;white-space:nowrap;font:600 .74rem/1 var(--f-display);color:var(--ink-2);background:var(--surface);border:1px solid var(--line);padding:6px 9px;border-radius:8px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .35s var(--ease)}
+.rail a:hover span,.rail a:focus-visible span{opacity:1;transform:translate(0,-50%)}
+@media (prefers-reduced-motion: reduce){.rail a::before,.rail a span{transition:opacity .2s,background-color .2s}}
 @media (max-width:1180px){.rail{display:none}}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:100svh;display:grid;align-items:center;padding-inline:var(--gutter);padding-block:calc(var(--nav-h) + 40px) 96px;overflow:hidden;
-  background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 35%,var(--snow) 100%);scroll-snap-align:start}
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 35%,var(--snow) 100%)}
 .hero-tracks{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hero-tracks polyline{fill:none;stroke:var(--track);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .hero-in{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;width:100%;display:grid;gap:22px;justify-items:start}
@@ -95,7 +127,7 @@ sub,sup{line-height:0}
 
 /* ---------- Chapters ---------- */
 main{padding-inline:var(--gutter)}
-.chapter{min-height:100svh;display:grid;align-items:center;padding-block:calc(var(--nav-h) + 36px) 64px;border-top:1px solid var(--line);scroll-snap-align:start}
+.chapter{min-height:100svh;display:grid;align-items:center;padding-block:calc(var(--nav-h) + 36px) 64px;border-top:1px solid var(--line)}
 .ch-in{max-width:var(--maxw);margin:0 auto;width:100%;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,68px);align-items:start}
 .chapter.flip .ch-text{order:2}
 .chapter.flip .ch-fig{order:1}
@@ -118,14 +150,44 @@ main{padding-inline:var(--gutter)}
 .more-btn:hover{border-color:var(--accent)}
 .more-btn .chev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .35s var(--ease)}
 .more-btn[aria-expanded="true"] .chev{transform:translateY(2px) rotate(-135deg)}
-.deeper{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+/* Opening eases in and out (app.js scales the duration to the content's height and keeps
+   the button still on screen); the text fades in slightly after the panel starts to open. */
+.deeper{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.45,0,.2,1)}
 .deeper.open{grid-template-rows:1fr}
 .deeper-in{overflow:hidden;min-height:0}
-.deeper-body{padding:18px 0 6px;max-width:36rem;color:var(--ink-2);font-size:1rem}
+.deeper-body{padding:18px 0 6px;max-width:36rem;color:var(--ink-2);font-size:1rem;opacity:0;transform:translateY(-8px);transition:opacity .25s ease,transform .45s var(--ease)}
+.deeper.open .deeper-body{opacity:1;transform:none;transition:opacity .45s ease .1s,transform .6s var(--ease) .05s}
 .deeper-body p{margin:0 0 .85rem}
 .deeper-body ol{margin:0 0 .85rem;padding-left:1.3rem}
 .deeper-body li{margin:0 0 .4rem}
-@media (prefers-reduced-motion: reduce){.deeper{transition:none}}
+@media (prefers-reduced-motion: reduce){.deeper,.deeper-body,.deeper.open .deeper-body{transition:none;transform:none}}
+
+/* Numbered steps for derivations: a numbered dot per step, joined by a thin line. */
+.deeper-body .steps{list-style:none;counter-reset:step;margin:0 0 1rem;padding:0}
+.deeper-body .steps>li{counter-increment:step;position:relative;margin:0;padding:0 0 .8rem 2.25rem}
+.deeper-body .steps>li::before{content:counter(step);position:absolute;left:0;top:.12em;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;font:700 .72rem/1 var(--f-display);color:var(--accent);background:var(--accent-soft)}
+.deeper-body .steps>li::after{content:"";position:absolute;left:calc(.75rem - 1px);top:1.85rem;bottom:.25rem;width:2px;border-radius:2px;background:var(--line)}
+.deeper-body .steps>li:last-child{padding-bottom:.2rem}
+.deeper-body .steps>li:last-child::after{display:none}
+
+/* "where" list: one row per symbol under a display equation. */
+.where{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:7px;margin:-.4rem 0 1.15rem;padding:9px 0 4px 14px;border-left:2px solid var(--line);font-size:.875rem;line-height:1.45;color:var(--ink-2)}
+.where::before{content:"where";grid-column:1/-1;font:italic .95rem/1.2 var(--f-math);color:var(--ink-2)}
+.where>div{display:contents}
+.where dt{margin:0;font-family:var(--f-math);font-size:1.02rem;line-height:1.3;color:var(--ink);white-space:nowrap}
+.where dt .m{font-size:1em}
+.where dd{margin:0;min-width:0}
+.where .how{display:block;margin-top:1px;font-size:.95em;color:var(--ink-2);opacity:.9}
+.where .from dt{align-self:baseline;font:600 .64rem/1.3 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.where .from dd{font-style:italic}
+.where .from dd .m{font-style:normal}
+.ch-text > .where{max-width:34rem}
+.tag{display:inline-block;vertical-align:1px;margin-left:5px;padding:3px 7px;border-radius:999px;font:650 .64rem/1 var(--f-display);letter-spacing:.04em;white-space:nowrap;border:1px solid transparent}
+.tag.meas{color:var(--tag-meas);background:var(--tag-meas-bg)}
+.tag.fit{color:var(--tag-fit);background:var(--tag-fit-bg)}
+.tag.calc{color:var(--tag-calc);background:var(--tag-calc-bg)}
+.tag.const{color:var(--ink-2);border-color:var(--line)}
+.tag.var{color:var(--ink-2);border-color:var(--muted);border-style:dashed}
 
 /* Maths */
 .m{font-family:var(--f-math);font-size:1.06em;white-space:nowrap;color:var(--ink)}
@@ -135,6 +197,8 @@ main{padding-inline:var(--gutter)}
 .frac>span:first-child{border-bottom:1px solid currentColor;padding:0 .25em .05em}
 .frac>span:last-child{padding:.05em .25em 0}
 .rt{border-top:1px solid currentColor;padding-top:.05em}
+/* optional line break inside a long display equation, used only on narrow screens */
+@media (max-width:560px){.eq-br{display:block;height:.35em}}
 
 /* ---------- Figure panels ---------- */
 .panel{background:var(--snow);border:1px solid var(--line);border-radius:22px;padding:clamp(12px,2vw,20px);position:relative}
@@ -159,6 +223,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .readouts{display:flex;flex-wrap:wrap;gap:4px 26px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
 .ro{min-width:0}
 .ro .k{font:600 .7rem/1.3 var(--f-display);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px}
+.ro .k .m,th .m{text-transform:none;letter-spacing:0;font-size:1.25em}
 .ro .v{font:700 1.18rem/1.25 var(--f-display);color:var(--ink);font-variant-numeric:tabular-nums}
 .ro .v small{font-weight:500;font-size:.78rem;color:var(--muted)}
 .sw{display:inline-block;width:16px;height:0;border-top:3px solid var(--accent);border-radius:2px}

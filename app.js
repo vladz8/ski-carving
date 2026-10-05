@@ -174,9 +174,15 @@ function chrome() {
     const panel = document.getElementById(btn.getAttribute('aria-controls'));
     if (!panel) return;
     const label = btn.querySelector('span');
+    const body = panel.querySelector('.deeper-body');
     const base = label.textContent;
     btn.addEventListener('click', () => {
       const open = btn.getAttribute('aria-expanded') !== 'true';
+      // Longer drop-downs take a little longer, so every one opens at a calm, similar pace.
+      const h = body ? body.offsetHeight : 0;
+      const ms = reduceMotion ? 0 : Math.round(clamp(380 + h * 0.3, 420, 950));
+      panel.style.transitionDuration = ms + 'ms';
+      holdStill(btn, ms + 80);
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       panel.classList.toggle('open', open);
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
@@ -184,6 +190,33 @@ function chrome() {
       label.textContent = open ? 'Show less' : base;
     });
   });
+}
+
+/* While a drop-down opens or closes, the column around it can grow in both directions
+   (it is centred on desktop), which pushes the button up or down the screen. This keeps
+   the button where it was by scrolling the page by the same amount, every frame,
+   until the animation ends or the reader scrolls themselves. */
+function holdStill(el, ms) {
+  const root = document.documentElement;
+  const top0 = el.getBoundingClientRect().top;
+  const t0 = performance.now();
+  let stop = false;
+  const cancel = () => { stop = true; };
+  const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+  evs.forEach(e => window.addEventListener(e, cancel, { passive: true, once: true }));
+  const prev = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  const done = () => {
+    root.style.scrollBehavior = prev;
+    evs.forEach(e => window.removeEventListener(e, cancel));
+  };
+  const step = now => {
+    if (stop) { done(); return; }
+    const d = el.getBoundingClientRect().top - top0;
+    if (Math.abs(d) >= 0.5) window.scrollBy(0, d);
+    if (now - t0 < ms) requestAnimationFrame(step); else done();
+  };
+  requestAnimationFrame(step);
 }
 
 /* The "swoosh": each chapter's text and figure glide in from opposite sides the first time it scrolls into view. */
