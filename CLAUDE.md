@@ -53,7 +53,7 @@ Reusable pieces inside the text:
 - Unloaded gap under the middle at 60°: paper stack SL 17 mm and GS 11.5 mm, against 18.1 mm and 12.2 mm predicted. The earlier ruler readings (SL 20 mm, GS 16 mm) read high at steep angles. Largest possible gap √(δ² + h²), with h the camber: SL 20.2 mm, GS 12.6 mm.
 - Twist under load: at most 1.3°.
 - Balanced-carve speed limit √(g · R_sc): SL 39.5 km/h, GS 60.7 km/h. Vlad's estimate from racing of where carving throws him off balance: SL 45–50 km/h, GS 65–70 km/h.
-- References on the site: Jentschura & Fahrbach, "Physics of skiing: the ideal-carving equation and its applications", arXiv physics/0310086 (https://arxiv.org/pdf/physics/0310086); "Physics of skiing", Real World Physics Problems (https://www.real-world-physics-problems.com/physics-of-skiing.html). Chapter 8 still cites Komissarov (2022) in its text.
+- References on the site: Jentschura & Fahrbach, "Physics of skiing: the ideal-carving equation and its applications", arXiv physics/0310086 (https://arxiv.org/pdf/physics/0310086); "Physics of skiing", Real World Physics Problems (https://www.real-world-physics-problems.com/physics-of-skiing.html); Komissarov (2022), Sports Biomechanics 21(8), 890–911, cited in chapter 8.
 
 ## Symbols
 
