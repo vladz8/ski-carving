@@ -144,6 +144,8 @@ function outline(s, n) {
 
 /* ================= page chrome ================= */
 function chrome() {
+  // Each "Go deeper" panel gets its own full-width row under the chapter (see styles.css).
+  $$('.ch-text > .deeper').forEach(d => { const row = d.closest('.ch-in'); if (row) row.appendChild(d); });
   const nav = $('#nav'), bar = $('#progress');
   const onScroll = () => {
     const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -165,6 +167,7 @@ function chrome() {
         links.forEach(a => a.classList.remove('on'));
         const a = map[e.target.id];
         if (a) a.classList.add('on');
+        showNow(e.target);
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
     Object.keys(map).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
@@ -190,6 +193,22 @@ function chrome() {
       label.textContent = open ? 'Show less' : base;
     });
   });
+}
+
+/* The chapter name in the middle of the top bar. */
+let nowId = '';
+function showNow(sec) {
+  const box = $('#now'), inner = box && box.firstElementChild;
+  if (!inner || sec.id === nowId) return;
+  nowId = sec.id;
+  const link = $('#rail a[data-s="' + sec.id + '"] span'), num = sec.querySelector('.ch-num');
+  if (sec.id === 'top' || !link) { box.classList.remove('show'); return; }
+  inner.textContent = '';
+  const n = num ? num.textContent.trim() : '';
+  if (n && n !== link.textContent) { const b = document.createElement('b'); b.textContent = n; inner.appendChild(b); }
+  inner.appendChild(document.createTextNode(link.textContent));
+  box.classList.add('show');
+  if (!reduceMotion && inner.animate) inner.animate([{ opacity: 0, transform: 'translateY(9px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' });
 }
 
 /* While a drop-down opens or closes, the column around it can grow in both directions
@@ -913,11 +932,108 @@ function figA() {
   });
 }
 
+/* ================= diagrams inside the "Go deeper" panels ================= */
+/* 03: a distance across the base, tipped by φ, and its shadow on the snow */
+function dg3() {
+  const svg = $('#dg3');
+  if (!svg) return;
+  const P0 = [70, 236], L = 250;
+  S('line', { x1: 16, y1: P0[1], x2: 424, y2: P0[1], class: 'floor' }, svg);
+  S('text', { x: 18, y: P0[1] + 50, class: 't t-s t-m' }, svg, 'snow');
+  const rays = S('g', null, svg);
+  const shadow = S('line', { class: 'shadow-line' }, svg);
+  const rise = S('line', { class: 'ln-dash' }, svg);
+  const sq = S('path', { class: 'ln-thin' }, svg);
+  const base = S('line', { class: 'ln-acc' }, svg);
+  const arcP = S('path', { class: 'ln-thin' }, svg);
+  const phT = S('text', { class: 't t-mi t-b' }, svg, 'φ');
+  const hypT = S('text', { class: 't t-s t-b', 'text-anchor': 'middle' }, svg, 'hypotenuse');
+  const shT = S('text', { class: 't t-s t-acc', 'text-anchor': 'middle' }, svg, 'shadow');
+  const riT = S('text', { class: 't t-s t-m' }, svg, 'rise');
+  function draw(phi) {
+    const c = Math.cos(rad(phi)), s = Math.sin(rad(phi)), E = [P0[0] + L * c, P0[1] - L * s];
+    clearNode(rays);
+    [0.3, 0.62, 0.94].forEach(f => { const x = P0[0] + L * c * f, y = P0[1] - L * s * f; arrow(rays, x, Math.max(14, y - 70), x, y - 6, 'arr-dim', 6); });
+    setA(shadow, { x1: P0[0], y1: P0[1], x2: E[0], y2: P0[1] });
+    setA(rise, { x1: E[0], y1: E[1], x2: E[0], y2: P0[1] });
+    const k = 11;
+    setA(sq, { d: 'M' + (E[0] - k) + ' ' + P0[1] + ' V' + (P0[1] - k) + ' H' + E[0] });
+    setA(base, { x1: P0[0], y1: P0[1], x2: E[0], y2: E[1] });
+    const r = 46;
+    setA(arcP, { d: 'M' + (P0[0] + r) + ' ' + P0[1] + ' A' + r + ' ' + r + ' 0 0 0 ' + (P0[0] + r * c).toFixed(2) + ' ' + (P0[1] - r * s).toFixed(2) });
+    const hm = rad(phi / 2);
+    setA(phT, { x: P0[0] + (r + 12) * Math.cos(hm) - 3, y: P0[1] - (r + 12) * Math.sin(hm) + 6 });
+    phT.style.opacity = phi > 9 ? 1 : 0;
+    const mx = P0[0] + L * c / 2, my = P0[1] - L * s / 2;
+    setA(hypT, { x: mx + 30 * s + 34, y: my + 26 * c + 4 });
+    setA(shT, { x: P0[0] + Math.max(L * c / 2, 34), y: P0[1] + 22 });
+    const right = E[0] > 340;
+    setA(riT, { x: right ? E[0] - 10 : E[0] + 10, y: (E[1] + P0[1]) / 2 + 4, 'text-anchor': right ? 'end' : 'start' });
+    riT.style.opacity = L * s > 30 ? 1 : 0;
+    $('#dg3-c').innerHTML = c.toFixed(2) + ' <small>× hypotenuse</small>';
+    $('#dg3-s').innerHTML = s.toFixed(2) + ' <small>× hypotenuse</small>';
+  }
+  bindRange('dg3-phi', 'dg3-phio', v => v + '°', draw);
+}
+
+/* 06: the right-angled triangle behind R = c²/(8s) */
+function dg6() {
+  const svg = $('#dg6');
+  if (!svg) return;
+  const O = [220, 306], Rp = 236, th = rad(52);
+  const A = [O[0] - Rp * Math.sin(th), O[1] - Rp * Math.cos(th)], B = [O[0] + Rp * Math.sin(th), A[1]], M = [O[0], A[1]], T = [O[0], O[1] - Rp];
+  S('polygon', { points: P([O, M, A]), class: 'tri' }, svg);
+  S('path', { d: 'M' + A[0].toFixed(1) + ' ' + A[1].toFixed(1) + ' A' + Rp + ' ' + Rp + ' 0 0 1 ' + B[0].toFixed(1) + ' ' + B[1].toFixed(1), class: 'ln-acc' }, svg);
+  S('line', { x1: A[0], y1: A[1], x2: B[0], y2: B[1], class: 'ln-ink', 'stroke-dasharray': '2 5' }, svg);
+  S('line', { x1: O[0], y1: O[1], x2: A[0], y2: A[1], class: 'ln' }, svg);
+  S('line', { x1: O[0], y1: O[1], x2: M[0], y2: M[1], class: 'ln' }, svg);
+  S('line', { x1: M[0], y1: M[1], x2: T[0], y2: T[1], class: 'ln-acc2', 'stroke-dasharray': '4 4' }, svg);
+  S('path', { d: 'M' + (M[0] - 12) + ' ' + M[1] + ' V' + (M[1] + 12) + ' H' + M[0], class: 'ln-thin' }, svg);
+  [A, B].forEach(p => S('circle', { cx: p[0], cy: p[1], r: 4.5, class: 'f-ink ring-surface' }, svg));
+  S('circle', { cx: O[0], cy: O[1], r: 4, class: 'f-acc' }, svg);
+  S('text', { x: O[0] + 10, y: O[1] + 4, class: 't t-s t-m' }, svg, 'centre');
+  S('text', { x: (O[0] + A[0]) / 2 - 14, y: (O[1] + A[1]) / 2 + 8, 'text-anchor': 'end', class: 't t-mi t-b' }, svg, 'R');
+  mtext(svg, { x: O[0] + 10, y: (O[1] + M[1]) / 2 + 6, class: 't t-b' }, [['R', true], [' − ', false], ['s', true]]);
+  mtext(svg, { x: (A[0] + M[0]) / 2, y: M[1] + 22, 'text-anchor': 'middle', class: 't t-b' }, [['c', true], ['/2', false]]);
+  S('text', { x: T[0] + 10, y: (T[1] + M[1]) / 2 + 6, class: 't t-mi t-b' }, svg, 's');
+  mtext(svg, { x: B[0] - 6, y: M[1] + 22, 'text-anchor': 'end', class: 't t-s t-m' }, [['chord ', false], ['c', true]]);
+  S('text', { x: T[0] - 40, y: T[1] - 8, 'text-anchor': 'end', class: 't t-s t-acc' }, svg, 'pencil arc');
+}
+
+/* 07: the family R/R_sc = cos^n φ, with my six tipped traces */
+function dg7() {
+  const svg = $('#dg7');
+  if (!svg) return;
+  const x0 = 48, x1 = 424, y0 = 14, y1 = 256, xmax = 65, ymax = 2.2;
+  const X = a => x0 + a / xmax * (x1 - x0), Y = r => y1 - r / ymax * (y1 - y0);
+  [0.5, 1, 1.5, 2].forEach(v => S('line', { x1: x0, y1: Y(v), x2: x1, y2: Y(v), class: 'grid' }, svg));
+  [0, 1, 2].forEach(v => S('text', { x: x0 - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 't t-s t-m' }, svg, String(v)));
+  S('line', { x1: x0, y1: y1, x2: x1, y2: y1, class: 'ln-thin' }, svg);
+  [0, 30, 60].forEach(v => S('text', { x: X(v), y: y1 + 20, 'text-anchor': 'middle', class: 't t-s t-m' }, svg, v + '°'));
+  mtext(svg, { x: (x0 + x1) / 2, y: y1 + 44, 'text-anchor': 'middle', class: 't t-s' }, [['Edge angle ', false], ['φ', true]]);
+  const curve = (n, cls) => {
+    const pts = [];
+    for (let a = 0; a <= xmax + 0.01; a += 0.5) { const v = Math.pow(Math.cos(rad(a)), n); if (v <= ymax) pts.push([X(a), Y(v)]); }
+    S('polyline', { points: P(pts), class: cls }, svg);
+    return pts[pts.length - 1];
+  };
+  const lab = (pt, n, extra, cls, dy) => mtext(svg, { x: Math.min(pt[0], x1) - 4, y: pt[1] + dy, 'text-anchor': 'end', class: 't t-s ' + cls }, [['n', true], [' = ' + n + extra, false]]);
+  lab(curve(-1, 'ln-dash'), '−1', ': tipping only', 't-m', -8);
+  lab(curve(0, 'ln-thin'), '0', '', 't-m', -8);
+  lab(curve(1, 'ln-ink'), '1', ': tipped and bent', 't-b', 24);
+  lab(curve(2, 'ln-thin'), '2', '', 't-m', -6);
+  [[29.8, 10.11, 'SL'], [29.4, 25.20, 'GS'], [44.0, 9.00, 'SL'], [45.0, 21.25, 'GS'], [57.9, 6.48, 'SL'], [59.1, 14.41, 'GS']].forEach(([a, R, k]) => {
+    const x = X(a), y = Y(R / SKI[k].Rsc);
+    if (k === 'SL') S('circle', { cx: x, cy: y, r: 4.5, class: 'f-sl ring-surface' }, svg);
+    else S('rect', { x: x - 4.5, y: y - 4.5, width: 9, height: 9, rx: 1.5, class: 'f-gs ring-surface' }, svg);
+  });
+}
+
 /* ================= start ================= */
 chrome();
 heroTracks();
 swoosh();
-[fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, figA].forEach(f => {
+[fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, figA, dg3, dg6, dg7].forEach(f => {
   try { f(); } catch (err) { if (window.console) console.error(err); }
 });
 })();

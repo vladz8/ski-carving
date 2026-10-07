@@ -34,6 +34,7 @@ Reusable pieces inside the text:
   </dl>
   ```
 - `<ol class="steps">`: numbered steps for a derivation inside a drop-down.
+- `<figure class="deeper-fig panel">`: a diagram inside a drop-down (drawn by `dg3`, `dg6`, `dg7` in app.js), so it only shows once the panel is open. On desktop app.js moves every drop-down into a full-width row under its chapter, with the diagram sticky beside the text.
 - `<span class="eq-br"></span>`: a line break inside a long display equation that only applies on narrow screens.
 
 ## Experiment record (source of truth: Vlad's Notion page "Physics of carvingg")
