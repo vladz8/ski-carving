@@ -54,9 +54,9 @@
   <div class="hero-in">
     <h1>The Physics of Ski Carving</h1>
     <p class="sub">How does a ski's turning radius change with every turn, and why does a ski turn tighter when you tip it?</p>
-    <p class="credit">A homemade experiment by Vladislav Zalevskiy, with two race skis, some wooden wedges and a pencil.</p>
+    <p class="credit">A homemade experiment by me, Vladislav Zalevskiy, with two race skis, some wooden wedges and a pencil.</p>
     <div class="tldr">
-      <h2>In 30 seconds</h2>
+      <h2>Quick overview</h2>
       <p>The radius printed on a ski is the circle its sides are cut from. When the ski is tipped onto its edge and a force is applied, the ski bends as a result, and that bend makes the turn tighter. The radius changes as <span class="m"><i>R</i> = <i>R</i><sub>sc</sub> · cos&#8201;<i>φ</i></span>, where <span class="m"><i>R</i></span> is the radius of the turn the ski carves, <span class="m"><i>R</i><sub>sc</sub></span> is the sidecut radius and <span class="m"><i>φ</i></span> is the edge angle the ski is tipped to. I tested this at home on my own two race skis, and the measurements agree with the formula to within a few percent.</p>
       <a class="jump" href="#results">Jump to the results <span aria-hidden="true">→</span></a>
     </div>
@@ -222,6 +222,16 @@
           <div><dt><span class="m"><i>φ</i></span></dt><dd>edge angle, how far the ski is tipped from flat (°) <span class="tag meas">measured</span><span class="how">60.5° (SL) and 60.6° (GS) for the gap readings.</span></dd></div>
           <div><dt><span class="m"><i>h</i></span></dt><dd>camber: how high the middle of the base arches off the floor when the ski lies flat (mm) <span class="tag meas">measured</span><span class="how">1.05&nbsp;mm (SL), 3.36&nbsp;mm (GS).</span></dd></div>
         </dl>
+        <figure class="deeper-fig panel">
+          <div class="legend"><div class="seg" role="group" aria-label="Choose a ski" id="dg4-ski"><button type="button" data-val="SL" aria-pressed="true">SL ski</button><button type="button" data-val="GS" aria-pressed="false">GS ski</button></div></div>
+          <svg id="dg4" viewBox="0 0 440 330" role="img" aria-label="The middle of a tipped ski seen from its end: the sidecut inset delta in the base splits into delta cos phi across and delta sin phi up, the camber h adds h cos phi up, and the bend b at right angles to the base closes the gap."></svg>
+          <div class="controls"><div class="ctl"><label for="dg4-phi">Edge angle φ</label><input type="range" id="dg4-phi" min="5" max="65" step="0.5" value="60"><output id="dg4-phio" for="dg4-phi">60°</output></div></div>
+          <div class="readouts">
+            <div class="ro"><div class="k">Gap</div><div class="v" id="dg4-gap">18.0 mm</div></div>
+            <div class="ro"><div class="k">Bend needed</div><div class="v" id="dg4-b">36.0 mm</div></div>
+          </div>
+          <figcaption>The middle of the ski seen from its end, to scale (8 px per mm, the same for both skis). The sidecut inset <span class="m"><i>δ</i></span> lies in the base; tipping by the edge angle <span class="m"><i>φ</i></span> splits it into <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i></span> across and <span class="m"><i>δ</i>&#8201;sin&#8201;<i>φ</i></span> up. The camber <span class="m"><i>h</i></span> stands at right angles to the base and adds <span class="m"><i>h</i>&#8201;cos&#8201;<i>φ</i></span> to the gap. The bend <span class="m"><i>b</i></span>, also at right angles to the base, closes the gap: <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i></span> down and <span class="m"><i>b</i>&#8201;sin&#8201;<i>φ</i></span> across.</figcaption>
+        </figure>
         <p><strong>Where the two parts come from.</strong></p>
         <ol class="steps">
           <li><strong>The sidecut part.</strong> Look at the middle of the ski from its end. The inset <span class="m"><i>δ</i></span> lies flat in the base. Tip the base by <span class="m"><i>φ</i></span> about the line between the contact points, and <span class="m"><i>δ</i></span> becomes the hypotenuse of a right-angled triangle: <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i></span> across the snow and <span class="m"><i>δ</i>&#8201;sin&#8201;<i>φ</i></span> straight up. The part that goes up is the gap.</li>
@@ -243,13 +253,13 @@
         <p><strong>How much bend?</strong> Bending the ski by <span class="m"><i>b</i></span>, perpendicular to its base, lowers the edge by <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i></span>. Closing the gap needs <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i> = <i>δ</i>&#8201;sin&#8201;<i>φ</i> + <i>h</i>&#8201;cos&#8201;<i>φ</i></span>, so</p>
         <div class="eq"><i>b</i> = <i>δ</i> tan <i>φ</i> + <i>h</i></div>
         <dl class="where">
-          <div><dt><span class="m"><i>b</i></span></dt><dd>bend: how far the middle of the ski has to flex, at right angles to its base, to touch the floor (mm) <span class="tag calc">calculated</span><span class="how">About 37&nbsp;mm at the middle of the SL at 60°.</span></dd></div>
+          <div><dt><span class="m"><i>b</i></span></dt><dd>bend: how far the middle of the ski has to flex, at right angles to its base, to touch the floor (mm) <span class="tag calc">calculated</span><span class="how">About 37&nbsp;mm at the middle of the SL at 60.5°.</span></dd></div>
           <div><dt><span class="m"><i>δ</i></span></dt><dd>sidecut inset (mm) <span class="tag calc">calculated</span><span class="how">20.15&nbsp;mm (SL), 12.15&nbsp;mm (GS) at the middle.</span></dd></div>
           <div><dt><span class="m"><i>φ</i></span></dt><dd>edge angle (°) <span class="tag meas">measured</span><span class="how">Phone inclinometer on the loaded ski: about 30°, 45° and 60°.</span></dd></div>
           <div><dt><span class="m"><i>h</i></span></dt><dd>camber (mm) <span class="tag meas">measured</span><span class="how">1.05&nbsp;mm (SL), 3.36&nbsp;mm (GS).</span></dd></div>
           <div class="from"><dt>note</dt><dd>Divide both sides of <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i> = <i>δ</i>&#8201;sin&#8201;<i>φ</i> + <i>h</i>&#8201;cos&#8201;<i>φ</i></span> by <span class="m">cos&#8201;<i>φ</i></span>, and use <span class="m">sin&#8201;<i>φ</i> / cos&#8201;<i>φ</i> = tan&#8201;<i>φ</i></span>.</dd></div>
         </dl>
-        <p>That is about 37&nbsp;mm at the middle of the SL at 60°. The interactive leaves out the 1&nbsp;mm camber to keep the picture simple.</p>
+        <p>That is about 37&nbsp;mm at the middle of the SL at 60.5°, the angle of my gap reading. At exactly 60° it is 36.0&nbsp;mm, which is what the interactive shows: it includes the 1.05&nbsp;mm camber.</p>
         <p><strong>Why the bend is at right angles to the base.</strong> A ski is far thinner than it is wide, so it flexes easily through its thickness and hardly at all sideways. On a tipped ski, "at right angles to the base" is tilted <span class="m"><i>φ</i></span> from vertical: the same right-angled triangle again, so the bend moves the edge <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i></span> down and <span class="m"><i>b</i>&#8201;sin&#8201;<i>φ</i></span> across.</p>
         <p><strong>Steeper means much more bend.</strong> <span class="m">tan&#8201;<i>φ</i></span> grows fast: <span class="m">tan&#8201;30° = 1/√3</span>, <span class="m">tan&#8201;45° = 1</span>, <span class="m">tan&#8201;60° = √3</span>, and it runs off to infinity as <span class="m"><i>φ</i></span> nears 90°.</p>
       </div></div></div>
@@ -261,12 +271,12 @@
         <div class="ctl"><label for="f4-push">Push down</label><input type="range" id="f4-push" min="0" max="100" step="1" value="0"><output id="f4-pusho" for="f4-push">0%</output></div>
       </div>
       <div class="readouts">
-        <div class="ro"><div class="k">Gap under the middle</div><div class="v" id="f4-gap">17.4 mm</div></div>
-        <div class="ro"><div class="k">Bend</div><div class="v" id="f4-bend">0 mm <small>of 34.9 needed</small></div></div>
+        <div class="ro"><div class="k">Gap under the middle</div><div class="v" id="f4-gap">18.0 mm</div></div>
+        <div class="ro"><div class="k">Bend</div><div class="v" id="f4-bend">0 mm <small>of 36.0 needed</small></div></div>
         <div class="ro"><div class="k">Radius seen from the snow</div><div class="v" id="f4-r">24.5 m</div></div>
       </div>
       <div class="note" id="f4-note">The edge touches the floor only at its ends.</div>
-      <figcaption>Top: the SL ski from the side. Bottom: the line its edge draws on the snow (solid), compared with the flat sidecut (dashed). Heights and depths exaggerated.</figcaption>
+      <figcaption>Top: the SL ski from the side. Bottom: the line its edge draws on the snow (solid), compared with the flat sidecut (dashed). The 1.05&nbsp;mm camber is included. Heights and depths exaggerated.</figcaption>
     </figure>
   </div>
 </section>
@@ -277,21 +287,21 @@
     <div class="ch-text">
       <p class="ch-num">05</p>
       <h2>Bending wins: <span class="m" style="font-size:.9em"><i>R</i> = <i>R</i><sub>sc</sub> · cos&#8201;<i>φ</i></span></h2>
-      <p>Put the two effects together. Tipping alone would stretch the turn to <span class="m"><i>R</i><sub>sc</sub> / cos&#8201;<i>φ</i></span>, but bending pulls it in so much that the result is</p>
+      <p>Now put the two effects together. Tipping alone stretches the turn to <span class="m"><i>R</i><sub>sc</sub> / cos&#8201;<i>φ</i></span>. Bending pulls it back in, and it pulls much harder. You end up with</p>
       <div class="eq" style="max-width:20rem"><i>R</i> = <i>R</i><sub>sc</sub> · cos <i>φ</i></div>
       <dl class="where">
         <div><dt><span class="m"><i>R</i></span></dt><dd>radius of the turn the ski carves (m) <span class="tag calc">calculated</span></dd></div>
         <div><dt><span class="m"><i>R</i><sub>sc</sub></span></dt><dd>sidecut radius, the radius of the circle the ski's sides are cut from (m) <span class="tag fit">fitted</span><span class="how">Fitted to the ski's width, measured every 10&nbsp;cm: 12.26&nbsp;m (SL), 28.99&nbsp;m (GS).</span></dd></div>
         <div><dt><span class="m"><i>φ</i></span></dt><dd>edge angle, how far the ski is tipped from flat (°) <span class="tag meas">measured</span><span class="how">Measured with a phone inclinometer on the loaded ski: about 30°, 45° and 60°.</span></dd></div>
       </dl>
-      <p>The more you tip a ski, the tighter it turns: 13% tighter than the printed radius at 30°, 29% at 45°, and half at 60°. My 12&nbsp;m slalom ski carves a 6&nbsp;m turn at 60°.</p>
-      <p>On a hard surface nothing else about the ski matters, not its stiffness, length or weight. Only the sidecut and the edge angle.</p>
+      <p>Tip a ski further and it turns tighter: 13% tighter than the printed radius at 30°, 29% at 45°, and half the printed radius at 60°. My 12&nbsp;m slalom ski carves a 6&nbsp;m turn at 60°.</p>
+      <p>On a hard surface, nothing else about the ski matters. Not its stiffness, not its length, not its weight. Only the sidecut and the edge angle set the turn.</p>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="d5"><span>Go deeper</span><span class="chev" aria-hidden="true"></span></button>
       <div class="deeper" id="d5" aria-hidden="true" inert><div class="deeper-in"><div class="deeper-body">
-        <p>Follow one point of the edge, set in by <span class="m"><i>δ</i></span> from the line between the contact points.</p>
+        <p>Pick one point on the edge. It sits <span class="m"><i>δ</i></span> in from the line between the contact points. Follow it through three moves.</p>
         <ol class="steps">
-          <li><strong>Tip the ski by <span class="m"><i>φ</i></span>.</strong> The inset now splits into <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i></span> across the snow and <span class="m"><i>δ</i>&#8201;sin&#8201;<i>φ</i></span> up off the snow, which is the gap.</li>
-          <li><strong>Bend the ski by <span class="m"><i>b</i></span></strong>, perpendicular to its base. That moves the point down by <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i></span> and across by <span class="m"><i>b</i>&#8201;sin&#8201;<i>φ</i></span>. On a tipped ski, "perpendicular to the base" leans <span class="m"><i>φ</i></span> away from vertical, like the normal reaction on a slope in mechanics, which is why the bend splits into these two parts. Both "across" parts point the same way, away from the line between the contact points.</li>
+          <li><strong>Tip the ski by <span class="m"><i>φ</i></span>.</strong> The inset splits into two parts: <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i></span> across the snow and <span class="m"><i>δ</i>&#8201;sin&#8201;<i>φ</i></span> up off it. The up part is the gap.</li>
+          <li><strong>Bend the ski by <span class="m"><i>b</i></span></strong>, at right angles to its base. On a tipped ski that direction leans <span class="m"><i>φ</i></span> away from vertical, just like the normal reaction on a slope in mechanics. So the bend moves the point <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i></span> down and <span class="m"><i>b</i>&#8201;sin&#8201;<i>φ</i></span> across. Both across parts point the same way: away from the line between the contact points.</li>
           <li><strong>The edge touches the snow</strong> when the bend cancels the lift: <span class="m"><i>b</i>&#8201;cos&#8201;<i>φ</i> = <i>δ</i>&#8201;sin&#8201;<i>φ</i></span>, so <span class="m"><i>b</i> = <i>δ</i>&#8201;tan&#8201;<i>φ</i></span>.</li>
           <li><strong>Add up the distance across the snow:</strong></li>
         </ol>
@@ -301,12 +311,12 @@
           <div><dt><span class="m"><i>φ</i></span></dt><dd>edge angle, how far the ski is tipped from flat (°) <span class="tag meas">measured</span><span class="how">Phone inclinometer on the loaded ski: about 30°, 45° and 60°.</span></dd></div>
           <div class="from"><dt>note</dt><dd>Uses <span class="m">tan&#8201;<i>φ</i> = sin&#8201;<i>φ</i> / cos&#8201;<i>φ</i></span> and <span class="m">cos²<i>φ</i> + sin²<i>φ</i> = 1</span>, which is Pythagoras in a right-angled triangle with hypotenuse 1.</dd></div>
         </dl>
-        <p><strong>The algebra, slowly.</strong> Write <span class="m">tan&#8201;<i>φ</i></span> as <span class="m">sin&#8201;<i>φ</i> / cos&#8201;<i>φ</i></span>, so the second term is <span class="m"><i>δ</i>&#8201;sin²<i>φ</i> / cos&#8201;<i>φ</i></span>. Put the first term over the same bottom, <span class="m"><i>δ</i>&#8201;cos²<i>φ</i> / cos&#8201;<i>φ</i></span>, and add the tops. The top is then <span class="m"><i>δ</i>(cos²<i>φ</i> + sin²<i>φ</i>)</span>, which is just <span class="m"><i>δ</i></span> at every angle.</p>
-        <p>Every inset is multiplied by <span class="m">1/cos&#8201;<i>φ</i></span>, so the curve on the snow is <span class="m">1/cos&#8201;<i>φ</i></span> times deeper. Since <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>, a deeper curve over the same chord has a smaller radius, and <span class="m"><i>R</i> = <i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i></span>.</p>
-        <p>In symbols: the sagitta <span class="m"><i>s</i></span> of the flat sidecut becomes <span class="m"><i>s</i>/cos&#8201;<i>φ</i></span> on the snow, while the chord <span class="m"><i>c</i></span> stays the same, so the radius of the turn is <span class="m"><i>R</i> = <i>c</i>²&#8201;cos&#8201;<i>φ</i>/(8<i>s</i>) = <i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i></span>, with <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius.</p>
-        <p><strong>Tipping against bending.</strong> Tipping alone multiplies every inset by <span class="m">cos&#8201;<i>φ</i></span> (chapter 3); tipping and bending multiply it by <span class="m">1/cos&#8201;<i>φ</i></span>. One gives a turn of <span class="m"><i>R</i><sub>sc</sub> / cos&#8201;<i>φ</i></span>, the other <span class="m"><i>R</i><sub>sc</sub> · cos&#8201;<i>φ</i></span>. At 60° that is twice the sidecut radius against half of it.</p>
-        <p><strong>Why camber doesn't matter.</strong> If the edge starts lifted by an extra amount <span class="m"><i>ζ</i></span> (camber, or a raised support), the bend has to cover it too: <span class="m"><i>b</i> = <i>δ</i>&#8201;tan&#8201;<i>φ</i> + <i>ζ</i></span>. The distance across becomes <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i> − <i>ζ</i>&#8201;sin&#8201;<i>φ</i> + <i>b</i>&#8201;sin&#8201;<i>φ</i> = <i>δ</i>/cos&#8201;<i>φ</i></span> again. <span class="m"><i>ζ</i></span> cancels exactly, which is why my loaded measurements don't depend on camber at all.</p>
-        <p>Where the <span class="m">−<i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> comes from: the extra lift is at right angles to the base, like the camber in chapter 4, so it moves the point <span class="m"><i>ζ</i>&#8201;cos&#8201;<i>φ</i></span> up and <span class="m"><i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> back towards the line between the contact points. The bend then has to push down that extra lift as well, and its extra <span class="m"><i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> across exactly undoes what the lift took away. The ski simply presses its arch flat.</p>
+        <p><strong>The algebra, step by step.</strong> Write <span class="m">tan&#8201;<i>φ</i></span> as <span class="m">sin&#8201;<i>φ</i> / cos&#8201;<i>φ</i></span>. The second term becomes <span class="m"><i>δ</i>&#8201;sin²<i>φ</i> / cos&#8201;<i>φ</i></span>. Put the first term over the same bottom, <span class="m"><i>δ</i>&#8201;cos²<i>φ</i> / cos&#8201;<i>φ</i></span>, and add the tops. You get <span class="m"><i>δ</i>(cos²<i>φ</i> + sin²<i>φ</i>)</span> on top, and that is just <span class="m"><i>δ</i></span> at every angle.</p>
+        <p>So bending multiplies every inset by <span class="m">1/cos&#8201;<i>φ</i></span>, and the curve on the snow gets <span class="m">1/cos&#8201;<i>φ</i></span> times deeper. A deeper curve over the same chord has a smaller radius, because <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>. That gives <span class="m"><i>R</i> = <i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i></span>.</p>
+        <p>In symbols: the sagitta <span class="m"><i>s</i></span> of the flat sidecut becomes <span class="m"><i>s</i>/cos&#8201;<i>φ</i></span> on the snow, and the chord <span class="m"><i>c</i></span> stays the same. The radius of the turn is <span class="m"><i>R</i> = <i>c</i>²&#8201;cos&#8201;<i>φ</i>/(8<i>s</i>) = <i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i></span>, where <span class="m"><i>R</i><sub>sc</sub></span> is the sidecut radius.</p>
+        <p><strong>Tipping against bending.</strong> Tipping alone multiplies every inset by <span class="m">cos&#8201;<i>φ</i></span> (chapter 3). Tipping plus bending multiplies it by <span class="m">1/cos&#8201;<i>φ</i></span>. The first gives a turn of <span class="m"><i>R</i><sub>sc</sub> / cos&#8201;<i>φ</i></span>, the second <span class="m"><i>R</i><sub>sc</sub> · cos&#8201;<i>φ</i></span>. At 60° that's twice the sidecut radius against half of it.</p>
+        <p><strong>Why camber doesn't matter.</strong> Say the edge starts lifted by an extra amount <span class="m"><i>ζ</i></span> (camber, or a raised support). The bend has to cover that too: <span class="m"><i>b</i> = <i>δ</i>&#8201;tan&#8201;<i>φ</i> + <i>ζ</i></span>. The distance across becomes <span class="m"><i>δ</i>&#8201;cos&#8201;<i>φ</i> − <i>ζ</i>&#8201;sin&#8201;<i>φ</i> + <i>b</i>&#8201;sin&#8201;<i>φ</i> = <i>δ</i>/cos&#8201;<i>φ</i></span>, the same as before. <span class="m"><i>ζ</i></span> cancels exactly. That's why my loaded measurements don't depend on camber at all.</p>
+        <p>Here's where the <span class="m">−<i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> comes from. The extra lift acts at right angles to the base, like the camber in chapter 4. It moves the point <span class="m"><i>ζ</i>&#8201;cos&#8201;<i>φ</i></span> up and <span class="m"><i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> back towards the line between the contact points. The bend pushes that lift back down, and its extra <span class="m"><i>ζ</i>&#8201;sin&#8201;<i>φ</i></span> across undoes exactly what the lift took away. The ski just presses its arch flat.</p>
       </div></div></div>
     </div>
     <figure class="ch-fig panel">
@@ -338,7 +348,7 @@
       <p>To find the radius, I measured the straight distance between the ends of the pencil line (the chord, <span class="m"><i>c</i></span>) and the biggest gap between the chord and the arc (the sagitta, <span class="m"><i>s</i></span>): <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>, where <span class="m"><i>R</i></span> is the radius.</p>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="d6"><span>Go deeper</span><span class="chev" aria-hidden="true"></span></button>
       <div class="deeper" id="d6" aria-hidden="true" inert><div class="deeper-in"><div class="deeper-body">
-        <p><strong>Why <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>.</strong> Join the circle's centre to one end of the chord and to the middle of the arc. Pythagoras gives</p>
+        <p><strong>Why <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>.</strong> Draw a line from the circle's centre to one end of the chord, and another to the middle of the arc. You get a right-angled triangle, and Pythagoras gives</p>
         <div class="eq">(<i>R</i> − <i>s</i>)² + (<i>c</i>/2)² = <i>R</i>²  ⇒  <i>R</i> = <span class="frac"><span><i>c</i>²</span><span>8<i>s</i></span></span> + <span class="frac"><span><i>s</i></span><span>2</span></span></div>
         <dl class="where">
           <div><dt><span class="m"><i>R</i></span></dt><dd>radius of the circle the pencil arc belongs to: the radius the ski carves (m) <span class="tag calc">calculated</span><span class="how">From each trace's chord and sagitta, e.g. 9.00&nbsp;m for the SL at 44.0°.</span></dd></div>
@@ -351,12 +361,12 @@
           <figcaption>The right-angled triangle behind <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>)</span>. <span class="m"><i>R</i></span> is the radius, <span class="m"><i>c</i></span> the chord and <span class="m"><i>s</i></span> the sagitta. The sagitta is drawn far deeper than on a real trace.</figcaption>
         </figure>
         <ol class="steps">
-          <li><strong>The triangle.</strong> Its corners are the circle's centre, the middle of the chord and one end of the chord. The side from the centre to the end of the chord is a radius, <span class="m"><i>R</i></span>. The side along the chord is half of it, <span class="m"><i>c</i>/2</span>. The radius to the middle of the arc is also <span class="m"><i>R</i></span> long, and the last <span class="m"><i>s</i></span> of it sticks out past the chord, so the third side is <span class="m"><i>R</i> − <i>s</i></span>. The angle at the middle of the chord is a right angle, because a line from the centre to the middle of a chord always meets it at 90°.</li>
-          <li><strong>Expand.</strong> <span class="m"><i>R</i>² − 2<i>Rs</i> + <i>s</i>² + <i>c</i>²/4 = <i>R</i>²</span>. The <span class="m"><i>R</i>²</span> cancels on both sides, leaving <span class="m">2<i>Rs</i> = <i>s</i>² + <i>c</i>²/4</span>.</li>
-          <li><strong>Divide by <span class="m">2<i>s</i></span></strong> and you have <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>) + <i>s</i>/2</span>.</li>
+          <li><strong>The triangle.</strong> Its corners are the circle's centre, the middle of the chord and one end of the chord. The side from the centre to the end of the chord is a radius, <span class="m"><i>R</i></span>. The side along the chord is half the chord, <span class="m"><i>c</i>/2</span>. The radius to the middle of the arc is also <span class="m"><i>R</i></span> long, but its last <span class="m"><i>s</i></span> sticks out past the chord, so the third side is <span class="m"><i>R</i> − <i>s</i></span>. The corner at the middle of the chord is 90°, because a line from the centre to the middle of a chord always meets it at a right angle.</li>
+          <li><strong>Expand.</strong> <span class="m"><i>R</i>² − 2<i>Rs</i> + <i>s</i>² + <i>c</i>²/4 = <i>R</i>²</span>. <span class="m"><i>R</i>²</span> cancels on both sides, which leaves <span class="m">2<i>Rs</i> = <i>s</i>² + <i>c</i>²/4</span>.</li>
+          <li><strong>Divide by <span class="m">2<i>s</i></span></strong> and you get <span class="m"><i>R</i> = <i>c</i>²/(8<i>s</i>) + <i>s</i>/2</span>.</li>
         </ol>
-        <p>With <span class="m"><i>s</i></span> about 2&nbsp;cm and <span class="m"><i>R</i></span> about 10&nbsp;m, the <span class="m"><i>s</i>/2</span> term is 1&nbsp;cm in 10&nbsp;m, under 0.1%, so I dropped it.</p>
-        <p><strong>How precise.</strong> I read the sagitta to ±0.5&nbsp;mm and the chord to ±5&nbsp;mm. Because <span class="m"><i>R</i></span> depends on <span class="m"><i>c</i>²/<i>s</i></span>, the uncertainties combine as</p>
+        <p>On my traces <span class="m"><i>s</i></span> is about 2&nbsp;cm and <span class="m"><i>R</i></span> is about 10&nbsp;m, so the <span class="m"><i>s</i>/2</span> term is 1&nbsp;cm in 10&nbsp;m. That's under 0.1%, so I dropped it.</p>
+        <p><strong>How precise.</strong> I read the sagitta to ±0.5&nbsp;mm and the chord to ±5&nbsp;mm. <span class="m"><i>R</i></span> depends on <span class="m"><i>c</i>²/<i>s</i></span>, so the uncertainties combine like this:</p>
         <div class="eq"><span class="frac"><span>Δ<i>R</i></span><span><i>R</i></span></span> = √( (2Δ<i>c</i>/<i>c</i>)² + (Δ<i>s</i>/<i>s</i>)² )</div>
         <dl class="where">
           <div><dt><span class="m">Δ<i>R</i></span></dt><dd>uncertainty in the radius: how far the true value could be from <span class="m"><i>R</i></span> (m) <span class="tag calc">calculated</span><span class="how">2–4% of <span class="m"><i>R</i></span> per trace, e.g. ±0.18&nbsp;m on 9.00&nbsp;m.</span></dd></div>
@@ -367,15 +377,15 @@
           <div><dt><span class="m"><i>s</i></span></dt><dd>sagitta (mm) <span class="tag meas">measured</span><span class="how">e.g. 27.6&nbsp;mm for the SL at 44°.</span></dd></div>
           <div class="from"><dt>note</dt><dd>The 2 is there because <span class="m"><i>c</i></span> is squared. Adding the two parts as squares assumes the two reading errors are independent (see below).</dd></div>
         </dl>
-        <p>which is 2–4% per trace. The sagitta reading is the biggest part.</p>
+        <p>That comes to 2–4% per trace. The sagitta reading causes most of it.</p>
         <ol class="steps">
-          <li><strong>Each reading on its own.</strong> <span class="m"><i>R</i></span> goes as <span class="m"><i>c</i>²</span>, so a 1% error in the chord makes a 2% error in the radius. <span class="m"><i>R</i></span> goes as <span class="m">1/<i>s</i></span>, so a 1% error in the sagitta makes a 1% error in the radius. With calculus: <span class="m">ln&#8201;<i>R</i> = 2&#8201;ln&#8201;<i>c</i> − ln&#8201;<i>s</i> − ln&#8201;8</span>, and differentiating gives <span class="m">Δ<i>R</i>/<i>R</i> ≈ 2Δ<i>c</i>/<i>c</i> − Δ<i>s</i>/<i>s</i></span> for small changes.</li>
-          <li><strong>Putting them together.</strong> In A-level physics you add the two percentages, <span class="m">2Δ<i>c</i>/<i>c</i> + Δ<i>s</i>/<i>s</i></span>. That is the worst case, with both errors pushing the same way. If the two errors are independent, they are as likely to partly cancel as to add, and the fair combination is the square root of the sum of squares, like the hypotenuse of a triangle whose sides are the two parts. It always comes out a little smaller than the worst case.</li>
-          <li><strong>An example.</strong> For my SL trace at 44°, <span class="m">Δ<i>s</i>/<i>s</i> = 0.5/27.6</span> and <span class="m">2Δ<i>c</i>/<i>c</i> = 2 × 5/1410</span>. The sagitta part is more than twice the chord part, and together they give the ±0.18&nbsp;m on 9.00&nbsp;m in the results. The sagitta is only a few centimetres, so half a millimetre is a big fraction of it; the chord is over a metre, so 5&nbsp;mm hardly matters.</li>
+          <li><strong>Each reading on its own.</strong> Use the usual rule for percentage uncertainties: when a quantity is raised to a power, multiply its percentage uncertainty by that power. <span class="m"><i>R</i></span> goes as <span class="m"><i>c</i>²</span>, so a 1% error in the chord gives a 2% error in the radius. That's the 2 in front of <span class="m">Δ<i>c</i>/<i>c</i></span>. <span class="m"><i>R</i></span> goes as <span class="m">1/<i>s</i></span>, so a 1% error in the sagitta gives a 1% error in the radius.</li>
+          <li><strong>Putting them together.</strong> In A-level physics you add the two percentages: <span class="m">2Δ<i>c</i>/<i>c</i> + Δ<i>s</i>/<i>s</i></span>. That's the worst case, where both errors push the same way. My two readings are independent, so they're as likely to partly cancel as to add. The fairer combination squares each part, adds the squares and takes the square root, like finding the hypotenuse of a triangle whose sides are the two parts. It always comes out a little smaller than the worst case.</li>
+          <li><strong>An example.</strong> On my SL trace at 44°, <span class="m">Δ<i>s</i>/<i>s</i> = 0.5/27.6</span> and <span class="m">2Δ<i>c</i>/<i>c</i> = 2 × 5/1410</span>. The sagitta part is more than twice the chord part. Together they give the ±0.18&nbsp;m on 9.00&nbsp;m in the results. The sagitta is only a few centimetres long, so half a millimetre is a big share of it. The chord is over a metre, so 5&nbsp;mm hardly matters.</li>
         </ol>
-        <p><strong>The angle.</strong> I read the edge angle <span class="m"><i>φ</i></span> with the phone at the tip end, the middle and the tail end of the loaded ski. The angle varied by at most 1.3° along the ski, so I used the reading at the middle.</p>
-        <p><strong>Checking the method.</strong> With the ski flat (0°), the pencil traces gave 12.80&nbsp;±&nbsp;0.34&nbsp;m for the SL and 29.40&nbsp;±&nbsp;1.23&nbsp;m for the GS, matching the radii from the width measurements in chapter 2. Pencil and ruler agree.</p>
-        <p>In total: eight traces (two skis at 0°, 30°, 45° and 60°) plus a repeat of the SL at 30°.</p>
+        <p><strong>The angle.</strong> I read the edge angle <span class="m"><i>φ</i></span> with my phone at the tip end, the middle and the tail end of the loaded ski. It changed by at most 1.3° along the ski, so I used the reading at the middle.</p>
+        <p><strong>Checking the method.</strong> I traced both skis flat (0°) as well. The pencil gave 12.80&nbsp;±&nbsp;0.34&nbsp;m for the SL and 29.40&nbsp;±&nbsp;1.23&nbsp;m for the GS, which matches the radii from the width measurements in chapter 2. The pencil and the ruler agree.</p>
+        <p>In total I made eight traces (two skis at 0°, 30°, 45° and 60°), plus a repeat of the SL at 30°.</p>
       </div></div></div>
     </div>
     <figure class="ch-fig panel">
@@ -418,21 +428,21 @@
     <div class="ch-text">
       <p class="ch-num">07</p>
       <h2>The results</h2>
-      <p>Each point is one pencil trace: the radius it carved divided by the ski's sidecut radius, plotted against the edge angle <span class="m"><i>φ</i></span> measured on the ski. The solid curve is the prediction, <span class="m">cos&#8201;<i>φ</i></span>. The dashed curve is what tipping alone would give, <span class="m">1/cos&#8201;<i>φ</i></span>.</p>
-      <p>All six tipped traces sit on the <span class="m">cos&#8201;<i>φ</i></span> curve, within their measurement uncertainty, and nowhere near <span class="m">1/cos&#8201;<i>φ</i></span>. At 60° both skis carve about half their sidecut radius: 6.5&nbsp;m for the slalom ski and 14.4&nbsp;m for the giant-slalom ski.</p>
+      <p>Each point on the chart is one pencil trace. It shows the radius the ski carved divided by its sidecut radius, against the edge angle <span class="m"><i>φ</i></span> I measured on the ski. The solid curve is the prediction, <span class="m">cos&#8201;<i>φ</i></span>. The dashed curve is what tipping alone would give, <span class="m">1/cos&#8201;<i>φ</i></span>.</p>
+      <p>All six tipped traces land on the <span class="m">cos&#8201;<i>φ</i></span> curve, within their uncertainty, and nowhere near <span class="m">1/cos&#8201;<i>φ</i></span>. At 60° both skis carve about half their sidecut radius: 6.5&nbsp;m on the slalom ski and 14.4&nbsp;m on the giant-slalom ski.</p>
       <p><strong>A ski turns tighter when you tip it because it bends.</strong></p>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="d7"><span>Go deeper</span><span class="chev" aria-hidden="true"></span></button>
       <div class="deeper" id="d7" aria-hidden="true" inert><div class="deeper-in"><div class="deeper-body">
-        <p><strong>Testing the shape of the law.</strong> Suppose the carved radius follows <span class="m"><i>R</i>/<i>R</i><sub>sc</sub> = cos<sup><i>n</i></sup>&#8201;<i>φ</i></span>, where <span class="m"><i>R</i><sub>sc</sub></span> is the sidecut radius, <span class="m"><i>φ</i></span> the edge angle and <span class="m"><i>n</i></span> a power for the data to decide. Tipping plus bending predicts <span class="m"><i>n</i> = +1</span>; tipping alone predicts <span class="m"><i>n</i> = −1</span>. Fitting the six tipped traces gives</p>
+        <p><strong>Testing the shape of the law.</strong> Say the carved radius follows <span class="m"><i>R</i>/<i>R</i><sub>sc</sub> = cos<sup><i>n</i></sup>&#8201;<i>φ</i></span>, where <span class="m"><i>R</i><sub>sc</sub></span> is the sidecut radius, <span class="m"><i>φ</i></span> the edge angle and <span class="m"><i>n</i></span> a power the data decide. Tipping plus bending predicts <span class="m"><i>n</i> = +1</span>. Tipping alone predicts <span class="m"><i>n</i> = −1</span>. Fitting the six tipped traces gives</p>
         <div class="eq"><i>n</i> = 1.01 ± 0.02</div>
         <dl class="where">
           <div><dt><span class="m"><i>n</i></span></dt><dd>the power of <span class="m">cos&#8201;<i>φ</i></span> in <span class="m"><i>R</i>/<i>R</i><sub>sc</sub> = cos<sup><i>n</i></sup>&#8201;<i>φ</i></span> (no unit) <span class="tag fit">fitted</span><span class="how">Fitted to the six tipped traces: 1.01&nbsp;±&nbsp;0.02 using the sidecut radii, 1.07&nbsp;±&nbsp;0.04 from the traces alone.</span></dd></div>
         </dl>
         <figure class="deeper-fig panel">
           <svg id="dg7" viewBox="0 0 440 320" role="img" aria-label="Curves of cos to the power n against edge angle for n equal to minus 1, 0, 1 and 2, with the six measured traces lying on the n equals 1 curve."></svg>
-          <figcaption>What different powers <span class="m"><i>n</i></span> would look like: <span class="m"><i>R</i>/<i>R</i><sub>sc</sub> = cos<sup><i>n</i></sup>&#8201;<i>φ</i></span>, with <span class="m"><i>R</i></span> the carved radius, <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius and <span class="m"><i>φ</i></span> the edge angle. The dots are my six tipped traces (SL round, GS square); they sit on <span class="m"><i>n</i> = 1</span>.</figcaption>
+          <figcaption>What each power <span class="m"><i>n</i></span> would look like: <span class="m"><i>R</i>/<i>R</i><sub>sc</sub> = cos<sup><i>n</i></sup>&#8201;<i>φ</i></span>, with <span class="m"><i>R</i></span> the carved radius, <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius and <span class="m"><i>φ</i></span> the edge angle. The dots are my six tipped traces (SL round, GS square); they sit on <span class="m"><i>n</i> = 1</span>.</figcaption>
         </figure>
-        <p>using the sidecut radii from the width measurements, or <span class="m"><i>n</i> = 1.07 ± 0.04</span> from the traces alone. The points scatter about as much as their uncertainties say they should (<span class="m"><i>χ</i>² = 3.8</span> for 6 points, where <span class="m"><i>χ</i>²</span> adds up each point's miss from the curve, measured in error bars and squared).</p>
+        <p>That's using the sidecut radii from the width measurements. From the traces alone you get <span class="m"><i>n</i> = 1.07 ± 0.04</span>. The points scatter about as much as their error bars say they should: <span class="m"><i>χ</i>² = 3.8</span> for 6 points, where <span class="m"><i>χ</i>²</span> adds up each point's miss from the curve, measured in error bars and squared.</p>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Trace</th><th><span class="m"><i>φ</i></span></th><th><span class="m"><i>R</i></span> measured</th><th><span class="m"><i>R</i></span> predicted</th><th>Diff.</th></tr></thead>
           <tbody>
@@ -446,7 +456,7 @@
             <tr><td>GS</td><td>59.1°</td><td>14.41 ± 0.31 m</td><td>14.89 m</td><td>−3.2%</td></tr>
           </tbody>
         </table></div>
-        <p>The SL value at 30° is the average of two traces that differ more than expected (chapter 9).</p>
+        <p>The SL value at 30° is the average of two traces that differed more than they should have (chapter 9).</p>
       </div></div></div>
     </div>
     <figure class="ch-fig panel">
@@ -457,7 +467,7 @@
         <span><span class="sw dash"></span>1/cos φ: tipping only</span>
       </div>
       <svg id="f7" viewBox="0 0 560 400" role="img" aria-label="Chart of carved radius divided by sidecut radius against edge angle: all measured points follow the cos phi curve, far below the one over cos phi curve."></svg>
-      <figcaption>Each point is one trace; bars show its uncertainty. Hover or tap a point for its values (<span class="m"><i>R</i></span> is the radius the ski carved). The two 0° points are drawn 1° apart so they don't overlap.</figcaption>
+      <figcaption>Each point is one trace, and the bars show its uncertainty. Hover over or tap a point to see its values (<span class="m"><i>R</i></span> is the radius the ski carved). I drew the two 0° points 1° apart so they don't overlap.</figcaption>
     </figure>
   </div>
 </section>
@@ -473,7 +483,7 @@
       <p>The ski never stops carving; the skier does. Around 45–50&nbsp;km/h on slalom skis and 65–70&nbsp;km/h on GS skis, carving hard throws me off balance. That is a little above the model's limit, and research on World Cup racing explains the gap: racers ski "dynamically", never settling into a balanced lean.</p>
       <button class="more-btn" type="button" aria-expanded="false" aria-controls="d8"><span>Go deeper</span><span class="chev" aria-hidden="true"></span></button>
       <div class="deeper" id="d8" aria-hidden="true" inert><div class="deeper-in"><div class="deeper-body">
-        <p><strong>Balance.</strong> In a steady turn the snow pushes on the edge. For the skier not to topple, that push has to point straight at their centre of mass, along the body. Its upward part holds up the weight, <span class="m"><i>mg</i></span> (mass <span class="m"><i>m</i></span> times gravity <span class="m"><i>g</i></span>), and its sideways part supplies the force that bends the path into a circle, <span class="m"><i>mv</i>²/<i>R</i></span>. Their ratio is the lean:</p>
+        <p><strong>Balance.</strong> In a steady turn the snow pushes on your edge. To stay upright, that push has to point straight at your centre of mass, along your body. Its upward part holds up your weight, <span class="m"><i>mg</i></span> (mass <span class="m"><i>m</i></span> times gravity <span class="m"><i>g</i></span>). Its sideways part is the force that bends your path into a circle, <span class="m"><i>mv</i>²/<i>R</i></span>. The ratio of the two is your lean:</p>
         <div class="eq">tan <i>φ</i> = <span class="frac"><span><i>v</i>²</span><span><i>gR</i></span></span>   with   <i>R</i> = <i>R</i><sub>sc</sub> cos <i>φ</i><span class="eq-br"></span>   ⇒   <i>v</i>² = <i>g R</i><sub>sc</sub> sin <i>φ</i></div>
         <dl class="where">
           <div><dt><span class="m"><i>φ</i></span></dt><dd>edge angle, here also how far the skier leans from vertical (°) <span class="tag var">variable</span></dd></div>
@@ -485,14 +495,14 @@
         </dl>
         <p><strong>The mechanics, step by step.</strong></p>
         <ol class="steps">
-          <li><strong>Two forces.</strong> Treat the skier as a particle at their centre of mass, moving round a horizontal circle of radius <span class="m"><i>R</i></span> at speed <span class="m"><i>v</i></span>. Only two forces act: the weight <span class="m"><i>mg</i></span> straight down, and the push from the snow, <span class="m"><i>F</i></span>, along the body at the angle <span class="m"><i>φ</i></span> to the vertical. (Friction along the direction of travel is left out.)</li>
-          <li><strong>Resolve vertically.</strong> The skier neither rises nor sinks, so the upward and downward forces balance: <span class="m"><i>F</i>&#8201;cos&#8201;<i>φ</i> = <i>mg</i></span>.</li>
-          <li><strong>Resolve horizontally.</strong> Moving in a circle needs an acceleration <span class="m"><i>v</i>²/<i>R</i></span> towards the centre, so by Newton's second law the sideways force is <span class="m"><i>F</i>&#8201;sin&#8201;<i>φ</i> = <i>mv</i>²/<i>R</i></span>.</li>
-          <li><strong>Divide</strong> step 3 by step 2. <span class="m"><i>F</i></span> and <span class="m"><i>m</i></span> cancel, leaving <span class="m">tan&#8201;<i>φ</i> = <i>v</i>²/(<i>gR</i>)</span>. The lean doesn't depend on how heavy the skier is.</li>
+          <li><strong>Two forces.</strong> Treat yourself as a particle at your centre of mass, going round a horizontal circle of radius <span class="m"><i>R</i></span> at speed <span class="m"><i>v</i></span>. Two forces act on you: your weight <span class="m"><i>mg</i></span> straight down, and the push from the snow, <span class="m"><i>F</i></span>, along your body at the angle <span class="m"><i>φ</i></span> to the vertical. I leave out friction along the direction you're travelling.</li>
+          <li><strong>Resolve vertically.</strong> You don't rise or sink, so the upward and downward forces balance: <span class="m"><i>F</i>&#8201;cos&#8201;<i>φ</i> = <i>mg</i></span>.</li>
+          <li><strong>Resolve horizontally.</strong> Going round a circle needs an acceleration <span class="m"><i>v</i>²/<i>R</i></span> towards the centre. Newton's second law then gives the sideways force: <span class="m"><i>F</i>&#8201;sin&#8201;<i>φ</i> = <i>mv</i>²/<i>R</i></span>.</li>
+          <li><strong>Divide</strong> step 3 by step 2. <span class="m"><i>F</i></span> and <span class="m"><i>m</i></span> cancel, and you're left with <span class="m">tan&#8201;<i>φ</i> = <i>v</i>²/(<i>gR</i>)</span>. Your weight makes no difference to the lean.</li>
           <li><strong>Put in the ski.</strong> With <span class="m"><i>R</i> = <i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i></span>: <span class="m">sin&#8201;<i>φ</i> / cos&#8201;<i>φ</i> = <i>v</i>² / (<i>g</i>&#8201;<i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>φ</i>)</span>. Multiply both sides by <span class="m">cos&#8201;<i>φ</i></span> and it cancels: <span class="m">sin&#8201;<i>φ</i> = <i>v</i>²/(<i>g</i>&#8201;<i>R</i><sub>sc</sub>)</span>, which is <span class="m"><i>v</i>² = <i>g</i>&#8201;<i>R</i><sub>sc</sub>&#8201;sin&#8201;<i>φ</i></span>.</li>
         </ol>
-        <p>The push from the snow is <span class="m"><i>mg</i>/cos&#8201;<i>φ</i></span>: 1.15 times body weight at 30°, 1.41 at 45° and 2 at 60°.</p>
-        <p>That is step 2 rearranged, <span class="m"><i>F</i> = <i>mg</i>/cos&#8201;<i>φ</i></span>, where <span class="m"><i>F</i></span> is the push from the snow: the load on the legs is <span class="m">1/cos&#8201;<i>φ</i></span> times body weight. The speeds in the table come from the last step. For my SL at 45°, <span class="m"><i>v</i> = √(9.81 × 12.26 × sin&#8201;45°)</span> in m/s, and multiplying by 3.6 to turn m/s into km/h gives 33.2&nbsp;km/h.</p>
+        <p>The push from the snow is <span class="m"><i>mg</i>/cos&#8201;<i>φ</i></span>: 1.15 times your body weight at 30°, 1.41 at 45° and 2 at 60°.</p>
+        <p>That's step 2 rearranged: <span class="m"><i>F</i> = <i>mg</i>/cos&#8201;<i>φ</i></span>, where <span class="m"><i>F</i></span> is the push from the snow. Your legs carry <span class="m">1/cos&#8201;<i>φ</i></span> times your body weight. The speeds in the table come from the last step. For my SL at 45°, <span class="m"><i>v</i> = √(9.81 × 12.26 × sin&#8201;45°)</span> in m/s. Multiply by 3.6 to turn m/s into km/h and you get 33.2&nbsp;km/h.</p>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Edge angle</th><th>SL speed</th><th>GS speed</th><th>Load</th></tr></thead>
           <tbody>
@@ -501,8 +511,8 @@
             <tr><td>60°</td><td>36.7 km/h</td><td>56.5 km/h</td><td>2.00 × weight</td></tr>
           </tbody>
         </table></div>
-        <p><strong>The limit.</strong> <span class="m">sin&#8201;<i>φ</i> ≤ 1</span>, so <span class="m"><i>v</i> ≤ √(<i>g</i>&#8201;<i>R</i><sub>sc</sub>)</span>, where <span class="m"><i>v</i></span> is the speed, <span class="m"><i>g</i></span> gravity and <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius: √(9.81 × 12.26) = 11.0&nbsp;m/s = 39.5&nbsp;km/h for the SL, and 60.7&nbsp;km/h for the GS. Above it the ski still carves, but the turn it cuts is tighter than any lean can hold.</p>
-        <p><strong>Why racers go faster.</strong> The model assumes a steady turn on flat ground with the skier always in balance. Komissarov (2022) found the same limit, <span class="m">√(<i>g</i>&#8201;<i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>α</i>)</span> on a slope of angle <span class="m"><i>α</i></span> (with <span class="m"><i>g</i></span> gravity and <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius), and showed with World Cup data that racers spend most of each turn above it: their lean swings from side to side and never settles, so they are never in the steady balance the model needs. My own limits are estimates from racing, not measurements.</p>
+        <p><strong>The limit.</strong> <span class="m">sin&#8201;<i>φ</i> ≤ 1</span>, so <span class="m"><i>v</i> ≤ √(<i>g</i>&#8201;<i>R</i><sub>sc</sub>)</span>, where <span class="m"><i>v</i></span> is the speed, <span class="m"><i>g</i></span> gravity and <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius. That gives √(9.81 × 12.26) = 11.0&nbsp;m/s = 39.5&nbsp;km/h for the SL, and 60.7&nbsp;km/h for the GS. Go faster and the ski still carves, but it cuts a tighter turn than any lean can hold.</p>
+        <p><strong>Why racers go faster.</strong> The model assumes a steady turn on flat ground, with you in balance the whole time. Komissarov (2022) found the same limit, <span class="m">√(<i>g</i>&#8201;<i>R</i><sub>sc</sub>&#8201;cos&#8201;<i>α</i>)</span> on a slope of angle <span class="m"><i>α</i></span> (with <span class="m"><i>g</i></span> gravity and <span class="m"><i>R</i><sub>sc</sub></span> the sidecut radius). The same paper shows, with World Cup data, that racers spend most of each turn above it. Their lean swings from side to side and never settles, so they never reach the steady balance the model needs. My own limits are estimates from racing, not measurements.</p>
       </div></div></div>
     </div>
     <figure class="ch-fig panel">

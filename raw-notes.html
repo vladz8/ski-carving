@@ -4,40 +4,66 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Raw Notes · The Physics of Ski Carving</title>
+<meta name="description" content="Vladislav Zalevskiy's handwritten working notes from the ski carving experiment: a zoomable whiteboard.">
+<meta name="author" content="Vladislav Zalevskiy">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Sans+3:wght@400;600&display=swap">
-<style>
-:root{
-  --bg:#F9FBFE; --surface:#FFFFFF; --ink:#0B1F3A; --ink-2:#3B4E6C; --muted:#6B7E9C; --line:#D6E1EE; --accent:#1D5BD0; --accent-soft:#DCE7FA;
-  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --f-body:"Source Sans 3","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --bg:#0B1832; --surface:#10213F; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6; --line:#284062; --accent:#6EA4FF; --accent-soft:#1A3663; color-scheme:dark; }
-}
-:root[data-theme="dark"]{ --bg:#0B1832; --surface:#10213F; --ink:#EAF1FB; --ink-2:#B3C4DC; --muted:#8398B6; --line:#284062; --accent:#6EA4FF; --accent-soft:#1A3663; color-scheme:dark; }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.6;padding-inline:clamp(16px,4vw,44px);padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}
-.bar{max-width:1180px;margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line)}
-.bar a{font-family:var(--f-display);font-weight:650;font-size:.9rem;color:var(--accent);text-decoration:none}
-.bar .name{font-family:var(--f-display);font-weight:700;font-stretch:110%;font-size:.95rem;color:var(--ink)}
-main{max-width:1180px;margin:0 auto;padding-block:64px}
-h1{margin:0 0 8px;font-family:var(--f-display);font-weight:800;font-stretch:115%;font-size:clamp(2rem,5vw,3.4rem);line-height:1;letter-spacing:-.02em}
-p{margin:0;color:var(--muted);max-width:34rem}
-a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div class="bar">
-  <span class="name">The Physics of Ski Carving</span>
-  <a href="index.html" onclick="if(history.length>1){history.back();return false;}">← Back to the site</a>
-</div>
-<main>
-  <h1>Raw Notes</h1>
-  <p>Coming soon: the measurement tables, photos and lab notebook from the experiment.</p>
+<body class="notes-page">
+<header class="nav scrolled" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="The Physics of Ski Carving, back to the main page">
+      <svg class="mark" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+        <defs><clipPath id="markClip"><rect width="36" height="36" rx="10"/></clipPath></defs>
+        <rect class="mark-bg" width="36" height="36" rx="10"/>
+        <g clip-path="url(#markClip)">
+          <circle class="mark-circle" cx="18" cy="-6" r="27"/>
+          <g class="mark-ski"><path class="mark-skishape" d="M4 18.5 Q18 22.5 32 18.5 Q33.5 21 32 23.5 Q18 22.5 4 23.5 Q2.5 21 4 18.5 Z"/></g>
+          <path class="mark-trk" d="M6 29 Q18 26 30 29"/>
+        </g>
+      </svg>
+      <span class="name"><span class="pre">The Physics of </span><span class="main">Ski Carving</span></span>
+    </a>
+    <span class="now show"><span class="now-in"><b>RAW NOTES</b>My whiteboard from the experiment</span></span>
+    <a class="rawlink" href="index.html"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5 M5.5 8H14"/></svg><span>Back to the site</span></a>
+  </div>
+</header>
+
+<main class="nv-app">
+  <nav class="nv-toc" aria-label="Parts of the whiteboard">
+    <p class="nv-toc-h">Jump to</p>
+    <ol id="nv-toc"></ol>
+    <a class="nv-pdf" href="notes/raw-notes.pdf" target="_blank" rel="noopener">Open the original PDF <span aria-hidden="true">↗</span></a>
+  </nav>
+
+  <div class="nv-stage">
+    <div class="nv" id="nv" tabindex="0" role="region" aria-roledescription="zoomable whiteboard" aria-label="My handwritten notes. Drag or use the arrow keys to move, pinch or use plus and minus to zoom.">
+      <div class="nv-world" id="nv-world"></div>
+    </div>
+
+    <div class="nv-intro" id="nv-intro">
+      <p><strong>My raw notes</strong> from the experiment, as I wrote them in GoodNotes: measurements, derivations and the first results.</p>
+      <p class="nv-hint"><span class="nv-hint-mouse">Drag to move · Scroll to go up and down · Ctrl&nbsp;+&nbsp;scroll or double-click to zoom</span><span class="nv-hint-touch">Drag to move · Pinch or double-tap to zoom</span></p>
+      <button type="button" class="nv-x" id="nv-intro-x" aria-label="Hide this note">×</button>
+    </div>
+
+    <div class="nv-tools" role="toolbar" aria-label="Zoom">
+      <button type="button" id="nv-in" aria-label="Zoom in">+</button>
+      <output id="nv-zoom" aria-live="off">100%</output>
+      <button type="button" id="nv-out" aria-label="Zoom out">−</button>
+      <button type="button" id="nv-fit" aria-label="Show the whole width" title="Whole width"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4 M10 2h4v4 M14 10v4h-4 M6 14H2v-4"/></svg></button>
+      <button type="button" id="nv-full" aria-label="Full screen" title="Full screen" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 2H2v3.5 M10.5 2H14v3.5 M14 10.5V14h-3.5 M2 10.5V14h3.5"/></svg></button>
+    </div>
+
+    <div class="nv-mini" id="nv-mini" aria-hidden="true">
+      <img src="notes/overview.webp" alt="" draggable="false">
+      <div class="nv-mini-view" id="nv-mini-view"></div>
+    </div>
+  </div>
 </main>
+
+<script src="notes.js"></script>
 </body>
 </html>

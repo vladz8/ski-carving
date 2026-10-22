@@ -7,7 +7,9 @@ A static website (no build step) explaining Vladislav (Vlad) Zalevskiy's home ex
 - `index.html`: all page content and text. One `<section class="chapter">` per chapter, with ids `top` (title page), `ch1`–`ch6`, `results`, `ch8`, `ch9`, `about`.
 - `styles.css`: design tokens at the top (`:root`, then the dark-mode overrides), followed by layout and component styles.
 - `app.js`: one function per interactive figure (`fig1` … `fig9`, `figA`), plus the page behaviour: progress bar, side dots, "Go deeper" drop-downs and the scroll-in animation.
-- `raw-notes.html`: the Raw Notes page linked from the top right (a placeholder for now).
+- `raw-notes.html` + `notes.js`: the Raw Notes page, a zoomable, draggable view of Vlad's GoodNotes whiteboard, with a "Jump to" list, minimap and zoom buttons. The logo and "Back to the site" both lead to `index.html`.
+- `notes/`: the whiteboard as WebP image tiles (`tiles/<level>/<col>_<row>.webp`, 512 px, five zoom levels), `overview.webp` (backdrop and minimap) and the original `raw-notes.pdf`. Rebuild the tiles from a new PDF export with pdftoppm + ImageMagick at the same crop (board points x 616, y 616, 3216 × 14996) or update `W`, `H` and the section rectangles in `notes.js`.
+- `photos/`: Vlad's experiment photos shown in chapter 6.
 
 ## Working rules
 
@@ -34,7 +36,7 @@ Reusable pieces inside the text:
   </dl>
   ```
 - `<ol class="steps">`: numbered steps for a derivation inside a drop-down.
-- `<figure class="deeper-fig panel">`: a diagram inside a drop-down (drawn by `dg3`, `dg6`, `dg7` in app.js), so it only shows once the panel is open. On desktop app.js moves every drop-down into a full-width row under its chapter, with the diagram sticky beside the text.
+- `<figure class="deeper-fig panel">`: a diagram inside a drop-down (drawn by `dg3`, `dg4`, `dg6`, `dg7` in app.js), so it only shows once the panel is open. On desktop app.js moves every drop-down into a full-width row under its chapter, with the diagram sticky beside the text.
 - `<span class="eq-br"></span>`: a line break inside a long display equation that only applies on narrow screens.
 
 ## Experiment record (source of truth: Vlad's Notion page "Physics of carvingg")
@@ -71,7 +73,7 @@ One meaning per letter across the whole site. Type: measured, calculated, fitted
 | δ | sidecut inset: how far a point of the edge is set in from the line between the contact points | mm | calculated | at the middle = sagitta: SL 20.15, GS 12.15 |
 | h | camber: how high the middle of the base arches off the floor when the ski lies flat | mm | measured | SL 1.05, GS 3.36 |
 | gap | height of the edge above the floor at the middle of the unloaded, tipped ski (written as a word, not a letter) | mm | measured (paper stack) | SL 17, GS 11.5 at about 60°; predicted 18.1, 12.2; largest possible 20.2, 12.6 |
-| b | bend: how far the middle of the ski flexes, at right angles to its base, until the edge touches | mm | calculated | about 37 at the middle of the SL at 60° (34.9 without camber) |
+| b | bend: how far the middle of the ski flexes, at right angles to its base, until the edge touches | mm | calculated | about 37 at the middle of the SL at 60.5°; 36.0 at exactly 60° (the chapter 4 interactive, camber included) |
 | β | angle in δ sin φ + h cos φ = √(δ² + h²) · sin(φ + β), with tan β = h/δ | ° | calculated | not quoted |
 | ζ | any extra lift of the edge at right angles to the base (camber, or a raised support) | mm | variable | – |
 | x | position along the ski (from the narrowest point or from the middle mark) | m | variable | half-widths every 10 cm |

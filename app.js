@@ -120,8 +120,8 @@ function svgToBox(svg, box, x, y) {
 
 /* ================= the two skis ================= */
 const SKI = {
-  SL: { key: 'SL', len: 1.65, Lc: 1.4057, Rsc: 12.26, printed: 12, hw: 0.0321, tip: 0.160, tail: 0.084, lim: [45, 50] },
-  GS: { key: 'GS', len: 1.88, Lc: 1.6787, Rsc: 28.99, printed: 30, hw: 0.0335, tip: 0.130, tail: 0.071, lim: [65, 70] }
+  SL: { key: 'SL', len: 1.65, Lc: 1.4057, Rsc: 12.26, printed: 12, cam: 1.05, sagMM: 20.15, hw: 0.0321, tip: 0.160, tail: 0.084, lim: [45, 50] },
+  GS: { key: 'GS', len: 1.88, Lc: 1.6787, Rsc: 28.99, printed: 30, cam: 3.36, sagMM: 12.15, hw: 0.0335, tip: 0.130, tail: 0.071, lim: [65, 70] }
 };
 Object.keys(SKI).forEach(k => { const s = SKI[k]; s.sag = s.Lc * s.Lc / (8 * s.Rsc); });
 
@@ -513,7 +513,7 @@ function fig3() {
 function fig4() {
   const svg = $('#f4');
   if (!svg) return;
-  const ski = SKI.SL, sMM = ski.sag * 1000;
+  const ski = SKI.SL, sMM = ski.sagMM;
   const xA = 64, xB = 496, xm = (xA + xB) / 2, fy = 150, vs = 3;
   S('text', { x: 18, y: 24, class: 't t-s t-m' }, svg, 'From the side (heights ×10)');
   S('line', { x1: 18, y1: fy, x2: 542, y2: fy, class: 'floor' }, svg);
@@ -540,10 +540,11 @@ function fig4() {
   let phi = 60, push = 0;
   function draw() {
     const c = Math.cos(rad(phi)), s = Math.sin(rad(phi)), tn = Math.tan(rad(phi));
-    const need = sMM * tn;                       // bend needed at the middle, mm (camber left out)
+    const hMM = ski.cam;
+    const need = sMM * tn + hMM;                 // bend needed at the middle, mm: b = δ tan φ + h (camber included)
     const bend = Math.min(push * 0.6, need);     // a linear spring: bend grows with push until the edge touches
     const f = need > 1e-9 ? bend / need : 1;
-    const gapMid = sMM * s * (1 - f);
+    const gapMid = (sMM * s + hMM * c) - bend * c; // gap = δ sin φ + h cos φ, minus what the bend has closed
     const N = 60, e = [], b = [];
     for (let i = 0; i <= N; i++) {
       const u = i / N, x = xA + (xB - xA) * u, h = gapMid * 4 * u * (1 - u);
@@ -571,7 +572,7 @@ function fig4() {
       gapT.style.opacity = 1;
     } else gapT.style.opacity = 0;
 
-    const depth = sMM * (c + f * tn * s);
+    const depth = sMM * c - hMM * s + bend * s;   // across the snow: δ cos φ − h sin φ + b sin φ (= δ / cos φ once touching)
     setA(trace, { d: quadD(xA, xB, y0, depth * ds) });
     setA(trT, { x: xm, y: y0 + depth * ds + 18 });
     trT.textContent = phi === 0 ? 'flat ski' : (f >= 0.9999 ? 'tipped and bent' : (push > 0 ? 'bending' : 'tipped only'));
@@ -581,7 +582,7 @@ function fig4() {
     $('#f4-r').textContent = R.toFixed(1) + ' m';
     const note = $('#f4-note');
     if (f >= 0.9999) {
-      note.textContent = phi === 0 ? 'A flat ski already touches along its whole edge.' : 'The edge now touches along its whole length. Pushing harder changes nothing on a hard floor.';
+      note.textContent = 'The edge now touches along its whole length. Pushing harder changes nothing on a hard floor.';
       note.className = 'note ok';
     } else {
       note.textContent = 'The edge touches the floor only at its ends.';
@@ -976,6 +977,64 @@ function dg3() {
   bindRange('dg3-phi', 'dg3-phio', v => v + '°', draw);
 }
 
+/* 04: the middle of a tipped ski from its end: δ splits into δ cos φ and δ sin φ, the camber h adds h cos φ, the bend b closes the gap */
+function dg4() {
+  const svg = $('#dg4');
+  if (!svg) return;
+  const O = [30, 268], px = 8;                      // px per mm
+  let ski = SKI.SL, phi = 60;
+  S('line', { x1: 10, y1: O[1], x2: 430, y2: O[1], class: 'floor' }, svg);
+  mtext(svg, { x: 12, y: 20, class: 't t-s t-m' }, [['From the end, at the middle of the ski', false]]);
+  const g = S('g', null, svg);
+  function draw() {
+    clearNode(g);
+    const c = Math.cos(rad(phi)), s = Math.sin(rad(phi)), d = ski.sagMM, h = ski.cam;
+    const u = [c, -s], up = [-s, -c], dn = [s, c];
+    const Pm = [O[0] + d * px * u[0], O[1] + d * px * u[1]];
+    const Q = [Pm[0] + h * px * up[0], Pm[1] + h * px * up[1]];
+    const gapPx = O[1] - Q[1], bPx = gapPx / c, B = [Q[0] + bPx * dn[0], Q[1] + bPx * dn[1]];
+    const A = [Pm[0], O[1]];
+    // ski cross-section at the middle, sitting on its (cambered) edge at Q
+    const wd = 70, th = 12, Q2 = [Q[0] + wd * u[0], Q[1] + wd * u[1]];
+    S('polygon', { points: P([Q, Q2, [Q2[0] + th * up[0], Q2[1] + th * up[1]], [Q[0] + th * up[0], Q[1] + th * up[1]]]), class: 'f-ski', opacity: 0.85 }, g);
+    S('line', { x1: Q[0], y1: Q[1], x2: Q2[0], y2: Q2[1], class: 'ln-acc' }, g);
+    // the triangle for δ
+    S('polygon', { points: P([O, A, Pm]), class: 'tri', opacity: 0.6 }, g);
+    S('line', { x1: O[0], y1: O[1], x2: Pm[0], y2: Pm[1], class: 'ln-ink', 'stroke-dasharray': '5 4' }, g);
+    S('line', { x1: Pm[0], y1: Pm[1], x2: A[0], y2: A[1], class: 'ln-dash' }, g);
+    S('path', { d: 'M' + (A[0] - 9) + ' ' + A[1] + ' V' + (A[1] - 9) + ' H' + A[0], class: 'ln-thin' }, g);
+    // camber h, at right angles to the base
+    S('line', { x1: Pm[0], y1: Pm[1], x2: Q[0], y2: Q[1], class: 'ln-acc2' }, g);
+    // the bend b, at right angles to the base, from the edge down to the floor
+    arrow(g, Q[0], Q[1], B[0], B[1], 'arr-acc', 9);
+    S('line', { x1: Q[0], y1: O[1], x2: B[0], y2: O[1], class: 'ln-acc2', 'stroke-dasharray': '3 4' }, g);
+    // gap
+    const gx = Math.max(Pm[0], Q[0]) + 34;
+    S('line', { x1: Q[0], y1: Q[1], x2: gx + 6, y2: Q[1], class: 'ln-thin', 'stroke-dasharray': '2 3' }, g);
+    arrow(g, gx, (O[1] + Q[1]) / 2, gx, Q[1] + 1, 'arr-dim', 6);
+    arrow(g, gx, (O[1] + Q[1]) / 2, gx, O[1] - 1, 'arr-dim', 6);
+    S('text', { x: gx + 7, y: (O[1] + Q[1]) / 2 + 4, class: 't t-s t-b' }, g, 'gap');
+    // angle
+    const r = 34;
+    S('path', { d: 'M' + (O[0] + r) + ' ' + O[1] + ' A' + r + ' ' + r + ' 0 0 0 ' + (O[0] + r * c).toFixed(1) + ' ' + (O[1] - r * s).toFixed(1), class: 'ln-thin' }, g);
+    const hm = rad(phi / 2);
+    S('text', { x: O[0] + (r + 9) * Math.cos(hm), y: O[1] - (r + 9) * Math.sin(hm) + 5, class: 't t-mi t-b' }, g, 'φ');
+    // labels
+    const mid = [(O[0] + Pm[0]) / 2, (O[1] + Pm[1]) / 2];
+    S('text', { x: mid[0] + up[0] * 14 - 4, y: mid[1] + up[1] * 14, 'text-anchor': 'end', class: 't t-mi t-b' }, g, 'δ');
+    mtext(g, { x: (O[0] + A[0]) / 2, y: O[1] + 20, 'text-anchor': 'middle', class: 't t-s t-m' }, [['δ', true], [' cos ', false], ['φ', true]]);
+    if (A[1] - Pm[1] > 75) mtext(g, { x: Pm[0] - 6, y: (Pm[1] + A[1]) / 2 + 22, 'text-anchor': 'end', class: 't t-s t-m' }, [['δ', true], [' sin ', false], ['φ', true]]);
+    S('text', { x: (Pm[0] + Q[0]) / 2 - 7, y: (Pm[1] + Q[1]) / 2, 'text-anchor': 'end', class: 't t-mi t-acc' }, g, 'h');
+    const bm = [(Q[0] + B[0]) / 2, (Q[1] + B[1]) / 2];
+    S('text', { x: bm[0] + 9, y: bm[1] - 4, class: 't t-mi t-acc' }, g, 'b');
+    if (B[0] - Q[0] > 50) mtext(g, { x: (Q[0] + B[0]) / 2, y: O[1] + 40, 'text-anchor': 'middle', class: 't t-s t-acc' }, [['b', true], [' sin ', false], ['φ', true]]);
+    $('#dg4-gap').textContent = (d * s + h * c).toFixed(1) + ' mm';
+    $('#dg4-b').textContent = (d * Math.tan(rad(phi)) + h).toFixed(1) + ' mm';
+  }
+  bindRange('dg4-phi', 'dg4-phio', v => (v % 1 ? v.toFixed(1) : v) + '°', v => { phi = v; draw(); });
+  bindSeg('dg4-ski', v => { ski = SKI[v]; draw(); });
+}
+
 /* 06: the right-angled triangle behind R = c²/(8s) */
 function dg6() {
   const svg = $('#dg6');
@@ -1033,7 +1092,7 @@ function dg7() {
 chrome();
 heroTracks();
 swoosh();
-[fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, figA, dg3, dg6, dg7].forEach(f => {
+[fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, figA, dg3, dg4, dg6, dg7].forEach(f => {
   try { f(); } catch (err) { if (window.console) console.error(err); }
 });
 })();

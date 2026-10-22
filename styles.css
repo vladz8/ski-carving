@@ -362,3 +362,70 @@ footer .f-in{max-width:var(--maxw);margin:0 auto;display:flex;flex-wrap:wrap;gap
 html,body{margin:0}
 img{max-width:100%}
 [hidden]{display:none!important}
+
+/* ---------- Raw Notes page (raw-notes.html + notes.js) ---------- */
+/* The board keeps GoodNotes' dark grey in both themes, because the tiles are images of it. */
+:root{--board:#333333;--board-ink:#F2F4F7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--board:#333333;--board-ink:#F2F4F7}}
+:root[data-theme="dark"]{--board:#333333;--board-ink:#F2F4F7}
+.notes-page{height:100%;overflow:hidden}
+.notes-page .nav{background:var(--bg)}
+.nv-app{padding:0;position:fixed;inset:calc(var(--nav-h) + env(safe-area-inset-top,0px)) 0 0 0;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.nv-toc{display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto;padding:22px 16px 20px 20px;border-right:1px solid var(--line);background:var(--bg)}
+.nv-toc-h{margin:0 0 2px;font:700 .72rem/1 var(--f-display);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.nv-toc ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.nv-toc button{width:100%;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:baseline;text-align:left;padding:9px 10px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ink-2);cursor:pointer;font:inherit;transition:background .25s,border-color .25s,color .25s,transform .35s cubic-bezier(.34,1.56,.64,1)}
+.nv-toc button .n{grid-row:1/3;font:700 .72rem/1.4 var(--f-display);letter-spacing:.08em;color:var(--muted)}
+.nv-toc button .t{font:650 .9rem/1.3 var(--f-display);color:var(--ink)}
+.nv-toc button .c{font-size:.78rem;color:var(--muted)}
+.nv-toc button:hover{background:var(--surface);border-color:var(--line);transform:translateX(3px)}
+.nv-toc button.on{background:var(--accent-soft);border-color:transparent}
+.nv-toc button.on .n,.nv-toc button.on .t{color:var(--accent)}
+.nv-pdf{margin-top:auto;padding-top:14px;font:650 .85rem/1.3 var(--f-display);color:var(--accent);text-decoration:none}
+.nv-pdf:hover{text-decoration:underline}
+.nv-stage{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--board)}
+.nv{position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:none}
+.nv.grabbing{cursor:grabbing}
+.nv:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.nv-world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.nv-world img{position:absolute;display:block;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.nv-back{left:0;top:0}
+.nv-tile{opacity:0;transition:opacity .3s ease}
+.nv-tile.in{opacity:1}
+@media (prefers-reduced-motion: reduce){.nv-tile{transition:none}}
+/* floating glass cards over the board */
+.nv-intro,.nv-tools,.nv-mini{position:absolute;z-index:2;background:color-mix(in srgb,var(--surface) 86%,transparent);-webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);border:1px solid var(--line);box-shadow:var(--shadow)}
+.nv-intro{left:16px;top:16px;max-width:25rem;padding:14px 40px 14px 16px;border-radius:16px;color:var(--ink-2);font-size:.92rem;line-height:1.45;transition:opacity .35s,transform .45s var(--ease)}
+.nv-intro p{margin:0 0 6px}
+.nv-intro strong{color:var(--ink)}
+.nv-intro.gone{opacity:0;transform:translateY(-10px);pointer-events:none}
+.nv-hint{font:600 .76rem/1.4 var(--f-display);color:var(--muted)}
+.nv-hint-touch{display:none}
+@media (hover:none){.nv-hint-mouse{display:none}.nv-hint-touch{display:inline}}
+.nv-x{position:absolute;right:8px;top:8px;width:28px;height:28px;border-radius:50%;border:0;background:transparent;color:var(--ink-2);font-size:1.2rem;line-height:1;cursor:pointer}
+.nv-x:hover{background:var(--accent-soft);color:var(--accent)}
+.nv-tools{left:16px;bottom:16px;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px}
+.nv-tools button{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--ink);font:600 1.25rem/1 var(--f-display);cursor:pointer;transition:background .2s,color .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.nv-tools button:hover{background:var(--accent);color:var(--accent-ink);transform:scale(1.08)}
+.nv-tools button:active{transform:scale(.94)}
+.nv-tools svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.nv-tools output{min-width:3.6em;text-align:center;font:700 .78rem/1 var(--f-display);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.nv-mini{right:16px;top:16px;width:78px;padding:0;border-radius:10px;overflow:hidden;cursor:pointer;touch-action:none;background:var(--board)}
+.nv-mini img{display:block;width:100%;height:auto;opacity:.9;pointer-events:none;-webkit-user-drag:none}
+.nv-mini-view{position:absolute;left:0;top:0;border:1.5px solid var(--accent);border-radius:3px;background:color-mix(in srgb,var(--accent) 18%,transparent);pointer-events:none}
+.nv-stage:fullscreen{background:var(--board)}
+@media (max-width:900px){
+  .nv-app{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .nv-toc{flex-direction:row;align-items:center;overflow-x:auto;overflow-y:hidden;padding:10px 16px;border-right:0;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .nv-toc::-webkit-scrollbar{display:none}
+  .nv-toc-h{display:none}
+  .nv-toc ol{display:flex;gap:6px}
+  .nv-toc button{width:auto;white-space:nowrap;display:flex;gap:7px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+  .nv-toc button .c{display:none}
+  .nv-toc button .n{grid-row:auto}
+  .nv-toc button:hover{transform:none}
+  .nv-pdf{margin:0;padding:0 0 0 6px;white-space:nowrap}
+  .nv-intro{left:10px;right:70px;top:10px;max-width:none}
+  .nv-tools{left:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+  .nv-mini{right:10px;top:10px;width:48px}
+}
